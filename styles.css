@@ -90,8 +90,8 @@ footer>div:first-child img,footer img{display:block;position:static;width:100%!i
 @media(max-width:560px){.brand-story h2.brand-lockup{font-size:clamp(44px,13vw,62px);margin-bottom:40px}.brand-remate img{height:.68em}}
 
 /* WOW Marketing identity transition — structure and responsive behavior preserved */
-.brand{width:clamp(116px,11vw,164px)}
-.brand img,.nav .brand img{aspect-ratio:auto;max-height:58px;object-fit:contain}
+.brand{width:clamp(112px,9vw,128px)}
+.brand img,.nav .brand img{aspect-ratio:auto;max-height:none;object-fit:contain}
 .hero{background:var(--blue);grid-template-columns:1.08fr .92fr}
 .hero-copy{max-width:780px}
 .hero h1.hero-title{font-size:clamp(48px,5.8vw,88px)}
@@ -123,7 +123,7 @@ footer>div:first-child img,footer img{display:block;position:static;width:100%!i
 .wow-method h3{font-size:32px}
 .diagnostic h2 span{color:var(--blue)}
 .footer-brand{width:auto!important}
-.footer-logo{display:block;background:var(--white);border-radius:18px;padding:14px;width:clamp(170px,17vw,235px)}
+.footer-logo{display:block;width:clamp(170px,17vw,235px)}
 .footer-logo img,footer .footer-logo img{width:100%!important;height:auto!important;aspect-ratio:auto;object-fit:contain}
 .footer-brand p{color:var(--yellow);font-size:20px;margin-bottom:0}
 @keyframes wowFloat{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(-1deg) translateY(-14px)}}
