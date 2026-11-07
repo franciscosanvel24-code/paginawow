@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://franciscosanvel24-code.github.io/paginawow/sitemap.xml
