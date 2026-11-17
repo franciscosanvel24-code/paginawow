@@ -69,8 +69,7 @@ p{margin:0}
 .nav{height:84px;padding:0 clamp(20px,5vw,80px);display:flex;align-items:center;justify-content:space-between;position:fixed;inset:0 0 auto;z-index:20;background:rgba(8,13,84,.72);-webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);border-bottom:1px solid rgba(255,255,255,.12)}
 .brand{display:block;flex:none}
 /* Logo sobre su propio fondo (placa blanca con franja de marca) */
-.brand-plate{display:flex;align-items:center;justify-content:center;background:var(--white);border-radius:16px;padding:9px 18px 15px;box-shadow:0 6px 0 var(--blue);position:relative;overflow:hidden}
-.brand-plate:after{content:'';position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--franja)}
+.brand-plate{display:flex;align-items:center;justify-content:center;background:var(--white);border-radius:16px;padding:10px 18px;position:relative;overflow:hidden}
 .brand-plate img{width:clamp(84px,7.2vw,104px);height:auto}
 .nav nav{display:flex;gap:clamp(14px,2vw,30px);font-size:15px;font-weight:700;color:var(--white)}
 .nav nav a{padding:6px 0;border-bottom:2px solid transparent}
@@ -330,7 +329,7 @@ footer nav a:hover{color:var(--cyan)}
 }
 @media(max-width:560px){
   .nav{height:72px}
-  .brand-plate{padding:8px 13px 13px;border-radius:13px}
+  .brand-plate{padding:8px 13px;border-radius:13px}
   .brand-plate img{width:84px}
   .button-small{padding:10px 14px;font-size:13px}
   .hero{padding-top:120px}
