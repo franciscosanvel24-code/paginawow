@@ -81,3 +81,21 @@ document.querySelectorAll('[data-tilt]').forEach((card) => {
   card.addEventListener('pointerleave', reset);
   card.addEventListener('pointercancel', reset);
 });
+
+/* Co-Founders: cuando data-url tenga la página de trabajo, la tarjeta se vuelve enlace */
+document.querySelectorAll('.founder[data-url]').forEach((card) => {
+  const url = card.dataset.url.trim();
+  if (!url) return;
+  const cta = card.querySelector('.founder-cta');
+  const name = card.querySelector('h3').textContent;
+  const link = document.createElement('a');
+  link.className = 'founder-cta';
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = 'Ver su trabajo ↗';
+  link.setAttribute('aria-label', `Ver el trabajo de ${name} (se abre en otra pestaña)`);
+  cta.replaceWith(link);
+  card.classList.add('has-url');
+  card.addEventListener('click', (e) => { if (!e.target.closest('a')) window.open(url, '_blank', 'noopener'); });
+});
