@@ -239,8 +239,15 @@ a.founder-cta:hover{background:var(--blue)}
 .founder.has-url{cursor:pointer}
 .glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--gx) var(--gy),rgba(255,255,255,.55),rgba(255,255,255,0) 45%);opacity:0;transition:opacity .4s;mix-blend-mode:soft-light}
 .founder.is-active .glare{opacity:1}
-.team-sello{position:absolute;left:50%;top:50%;translate:-50% -50%;rotate:-12deg;z-index:3;display:inline-flex;align-items:center;gap:.3em;background:var(--yellow);color:var(--navy);font-weight:700;font-size:13px;letter-spacing:2.4px;padding:12px 18px;border-radius:999px;box-shadow:0 6px 0 var(--blue);white-space:nowrap;animation:selloContra 3.2s ease-in-out infinite}
-.team-sello img{height:1.4em;width:auto;margin-left:-.3em}
+
+/* Insignia giratoria GO TO WOW entre las tarjetas de Co-Founders */
+.team-badge{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:3;width:clamp(110px,10vw,140px);aspect-ratio:1;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 5px var(--navy),0 8px 0 5px var(--blue);display:grid;place-items:center;transition:transform .4s ease}
+.badge-ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 14s linear infinite}
+.badge-ring text{font:700 19px 'WOW Helvetica',Helvetica,Arial,sans-serif;letter-spacing:2px;fill:var(--navy)}
+.badge-iso{width:42%;height:auto;rotate:-12deg;animation:isoBob 2.4s ease-in-out infinite}
+.founders:hover .team-badge{transform:scale(1.08)}
+.founders:hover .badge-ring{animation-duration:5s}
+@keyframes isoBob{0%,100%{rotate:-12deg;scale:1}50%{rotate:8deg;scale:1.08}}
 
 /* Ideas */
 .blog{background:var(--pale)}
@@ -295,11 +302,7 @@ footer nav a:hover{color:var(--cyan)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes morph{0%,100%{border-radius:46% 54% 44% 56%/52% 44% 56% 48%}50%{border-radius:56% 44% 54% 46%/44% 56% 44% 56%}}
 @keyframes wobble{0%,100%{rotate:-12deg}50%{rotate:-6deg}}
-/* Sello: la cara sube y se va a la izquierda mientras su sombra baja y se va a la derecha */
-@keyframes selloContra{
-  0%,100%{translate:-50% -50%;box-shadow:0 6px 0 var(--blue)}
-  50%{translate:calc(-50% - 6px) calc(-50% - 8px);box-shadow:12px 20px 0 var(--blue)}
-}
+
 
 /* ---------- Responsivo ---------- */
 @media(max-width:1120px){
@@ -319,8 +322,6 @@ footer nav a:hover{color:var(--cyan)}
   .founders{grid-template-columns:minmax(0,380px)}
   .founder{--base:0deg!important}
   .founder-humberto .founder-inner{box-shadow:12px 12px 0 var(--cyan)}
-  .team-sello{position:relative;left:auto;top:auto;translate:none;justify-self:center;margin-top:8px;animation-name:selloContraMovil}
-  @keyframes selloContraMovil{0%,100%{translate:0 0;box-shadow:0 6px 0 var(--blue)}50%{translate:-6px -8px;box-shadow:12px 20px 0 var(--blue)}}
 }
 @media(max-width:560px){
   .nav{height:72px}
