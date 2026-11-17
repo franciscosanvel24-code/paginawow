@@ -322,7 +322,7 @@ footer nav a:hover{color:var(--cyan)}
 @media(max-width:1120px){
   .nav nav{display:none}
   .hero{grid-template-columns:1fr}
-  .hero-stage{min-height:420px}
+  .hero-stage{min-height:420px;margin:70px 0 60px}
   .logo-backdrop{width:min(70vw,420px)}
   .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -345,7 +345,7 @@ footer nav a:hover{color:var(--cyan)}
   .brand-plate img{width:84px}
   .button-small{padding:10px 14px;font-size:13px}
   .hero{padding-top:120px}
-  .hero-stage{min-height:340px}
+  .hero-stage{min-height:340px;margin:60px 0 50px}
   .sello-arco text{font-size:20px;letter-spacing:3px}
   .service-grid{grid-template-columns:1fr}
   .service-card{min-height:0}
