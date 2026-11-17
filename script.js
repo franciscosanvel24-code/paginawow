@@ -21,44 +21,67 @@ form.addEventListener('submit', (event) => {
   note.textContent = 'Tus datos están completos. El envío se habilitará cuando conectemos el formulario con el canal de contacto de WOW Marketing.';
 });
 
-/* Isotipo que rebota entre las paredes del recuadro de contacto */
-(() => {
-  const box = document.getElementById('bounceBox');
-  const iso = document.getElementById('bounceIso');
-  if (!box || !iso) return;
-  const colors = ['assets/wow-isotipo.svg', 'assets/wow-isotipo-amarillo.svg', 'assets/wow-isotipo-blanco.svg'];
-  colors.forEach((src) => { const pre = new Image(); pre.src = src; });
-  let colorIndex = 0;
-  let x = 40, y = 40, vx = 1.6, vy = 1.25, rot = -12, running = false, last = 0;
-
-  const bounceColor = () => {
-    colorIndex = (colorIndex + 1) % colors.length;
-    iso.src = colors[colorIndex];
-  };
-
+/* Motor de rebote: mueve elementos dentro de su contenedor y los hace rebotar en sus paredes.
+   overflow = cuánto puede salirse cada elemento del borde (0 = rebota justo en la pared). */
+function makeBouncer(container, items, { overflow = 0, speed = 1, onBounce } = {}) {
+  const state = items.map((el, n) => {
+    const angle = (n * 2.39996) + 0.6;          // direcciones distintas para cada elemento
+    const v = (0.9 + (n % 3) * 0.35) * speed;
+    return { el, x: el.offsetLeft, y: el.offsetTop, vx: Math.cos(angle) * v, vy: Math.sin(angle) * v, rot: -12 };
+  });
+  state.forEach((s) => { s.el.style.left = '0'; s.el.style.top = '0'; s.el.style.right = 'auto'; s.el.style.bottom = 'auto'; });
+  let running = false, last = 0;
   const step = (t) => {
     if (!running) return;
     const dt = last ? Math.min((t - last) / 16.67, 3) : 1;
     last = t;
-    const maxX = box.clientWidth - iso.offsetWidth;
-    const maxY = box.clientHeight - iso.offsetHeight;
-    x += vx * dt; y += vy * dt; rot += 0.15 * dt;
-    if (x <= 0 || x >= maxX) { vx *= -1; x = Math.max(0, Math.min(x, maxX)); bounceColor(); }
-    if (y <= 0 || y >= maxY) { vy *= -1; y = Math.max(0, Math.min(y, maxY)); bounceColor(); }
-    iso.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+    const W = container.clientWidth, H = container.clientHeight;
+    state.forEach((s) => {
+      const w = s.el.offsetWidth, h = s.el.offsetHeight;
+      const minX = -w * overflow, maxX = W - w * (1 - overflow);
+      const minY = -h * overflow, maxY = H - h * (1 - overflow);
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      let hit = false;
+      if (s.x <= minX || s.x >= maxX) { s.vx *= -1; s.x = Math.max(minX, Math.min(s.x, maxX)); hit = true; }
+      if (s.y <= minY || s.y >= maxY) { s.vy *= -1; s.y = Math.max(minY, Math.min(s.y, maxY)); hit = true; }
+      if (hit && onBounce) onBounce(s);
+      if (onBounce) { s.rot += 0.15 * dt; s.el.style.transform = `translate(${s.x}px, ${s.y}px) rotate(${s.rot}deg)`; }
+      else s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+    });
     requestAnimationFrame(step);
   };
-
-  if (reduceMotion) {
-    iso.style.transform = 'translate(24px, 24px) rotate(-12deg)';
-    return;
-  }
-  /* Solo se anima cuando el recuadro está en pantalla */
+  /* Solo se anima mientras el contenedor está en pantalla */
   new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting && !running) { running = true; last = 0; requestAnimationFrame(step); }
     else if (!entry.isIntersecting) running = false;
-  }).observe(box);
-})();
+  }).observe(container);
+}
+
+if (!reduceMotion) {
+  /* Luces del fondo: rebotan entre las paredes de cada sección */
+  document.querySelectorAll('main section').forEach((section) => {
+    const lights = [...section.querySelectorAll(':scope > .blob, :scope > .luz')];
+    if (lights.length) makeBouncer(section, lights, { overflow: 0.45, speed: 0.9 });
+  });
+
+  /* Caras WOW en el recuadro de contacto: rebotan y cambian de color en cada choque */
+  const box = document.getElementById('bounceBox');
+  if (box) {
+    const colors = ['assets/wow-isotipo.svg', 'assets/wow-isotipo-amarillo.svg', 'assets/wow-isotipo-blanco.svg'];
+    colors.forEach((src) => { const pre = new Image(); pre.src = src; });
+    const faces = [...box.querySelectorAll('.bounce-iso')];
+    faces.forEach((f, n) => { f.style.left = `${10 + n * 17}%`; f.style.top = `${8 + (n * 23) % 70}%`; });
+    makeBouncer(box, faces, {
+      speed: 1.5,
+      onBounce: (s) => {
+        const next = (colors.indexOf(s.el.getAttribute('src')) + 1) % colors.length;
+        s.el.src = colors[next];
+      },
+    });
+  }
+} else {
+  document.querySelectorAll('.bounce-iso').forEach((f, n) => { f.style.transform = `translate(${24 + n * 60}px, ${24 + n * 40}px) rotate(-12deg)`; });
+}
 
 /* Tarjetas de Co-Founders: inclinación 3D y brillo que siguen al cursor */
 document.querySelectorAll('[data-tilt]').forEach((card) => {

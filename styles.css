@@ -46,8 +46,17 @@ p{margin:0}
 .glass-dark:before{background:linear-gradient(120deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 40%)}
 .glass-light{background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,255,255,.4))}
 
-/* Manchas de color detrás del cristal */
-.blob{position:absolute;border-radius:50%;filter:blur(60px);z-index:0;pointer-events:none}
+/* Manchas de color detrás del cristal (rebotan entre las paredes de su sección, ver script.js) */
+.blob{position:absolute;border-radius:50%;filter:blur(60px);z-index:0;pointer-events:none;will-change:transform}
+.blob-pr1{width:480px;height:480px;background:var(--blue);opacity:.35;left:-120px;top:10%}
+.blob-pr2{width:340px;height:340px;background:var(--cyan);opacity:.18;right:10%;bottom:-60px}
+.blob-t1{width:460px;height:460px;background:var(--blue);opacity:.4;left:-100px;top:20%}
+.blob-t2{width:360px;height:360px;background:var(--cyan);opacity:.22;right:0;top:0}
+.blob-t3{width:300px;height:300px;background:var(--yellow);opacity:.16;left:40%;bottom:-80px}
+.blob-b1{width:420px;height:420px;background:var(--cyan);opacity:.35;right:5%;top:30%}
+.blob-b2{width:360px;height:360px;background:var(--yellow);opacity:.45;left:5%;bottom:0}
+.blob-c1{width:380px;height:380px;background:var(--cyan);opacity:.25;right:0;top:0}
+.blob-c2{width:320px;height:320px;background:var(--yellow);opacity:.3;left:30%;bottom:0}
 
 /* Animación de entrada */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
@@ -119,10 +128,10 @@ p{margin:0}
 .brand-moment{background:linear-gradient(160deg,#0B1270 0%,var(--navy) 60%);color:var(--white)}
 /* Luces en movimiento con los colores de la marca */
 .luz{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none;mix-blend-mode:screen;will-change:transform}
-.luz-cyan{width:620px;height:620px;background:var(--cyan);opacity:.42;right:-200px;bottom:-260px;animation:luzA 18s ease-in-out infinite alternate}
-.luz-blue{width:560px;height:560px;background:var(--blue);opacity:.5;left:-160px;top:-180px;animation:luzB 22s ease-in-out infinite alternate}
-.luz-yellow{width:360px;height:360px;background:var(--yellow);opacity:.34;right:22%;top:8%;animation:luzC 16s ease-in-out infinite alternate}
-.luz-cyan-2{width:300px;height:300px;background:var(--cyan);opacity:.2;left:30%;bottom:-120px;animation:luzD 20s ease-in-out infinite alternate}
+.luz-cyan{width:620px;height:620px;background:var(--cyan);opacity:.42;right:-200px;bottom:-260px}
+.luz-blue{width:560px;height:560px;background:var(--blue);opacity:.5;left:-160px;top:-180px}
+.luz-yellow{width:360px;height:360px;background:var(--yellow);opacity:.34;right:22%;top:8%}
+.luz-cyan-2{width:300px;height:300px;background:var(--cyan);opacity:.2;left:30%;bottom:-120px}
 @keyframes luzA{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-18vw,-14vh) scale(1.15)}100%{transform:translate(-6vw,-30vh) scale(.9)}}
 @keyframes luzB{0%{transform:translate(0,0) scale(1)}50%{transform:translate(20vw,16vh) scale(1.2)}100%{transform:translate(8vw,30vh) scale(.95)}}
 @keyframes luzC{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-22vw,22vh) scale(1.25)}100%{transform:translate(10vw,36vh) scale(.85)}}
@@ -239,7 +248,11 @@ a.founder-cta:hover{background:var(--blue)}
 .diagnostic{background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:stretch}
 .bounce-box{position:relative;overflow:hidden;border-radius:34px;background:var(--navy);color:var(--white);padding:clamp(34px,4.5vw,64px);display:flex;align-items:center;min-height:560px;box-shadow:14px 14px 0 var(--blue)}
 .bounce-box:after{content:'';position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--franja)}
-.bounce-iso{position:absolute;left:0;top:0;width:clamp(110px,12vw,170px);height:auto;opacity:.32;z-index:0;will-change:transform;pointer-events:none}
+.bounce-iso{position:absolute;left:0;top:0;width:clamp(110px,12vw,170px);height:auto;opacity:.3;z-index:0;will-change:transform;pointer-events:none}
+.bounce-iso-2{width:clamp(70px,7vw,100px);opacity:.28}
+.bounce-iso-3{width:clamp(56px,5vw,80px);opacity:.22}
+.bounce-iso-4{width:clamp(44px,4vw,64px);opacity:.3}
+.bounce-iso-5{width:clamp(90px,9vw,130px);opacity:.2}
 .bounce-copy{position:relative;z-index:1}
 .bounce-copy .eyebrow{color:var(--cyan)}
 .bounce-copy h2{font-size:clamp(40px,4.6vw,70px);line-height:1}
