@@ -467,3 +467,8 @@ main{position:relative}
 .service-card[data-tone=yellow] .svc-icon .num{color:rgba(230,180,0,.45)!important}
 .service-card[data-tone=cyan] .svc-icon .num{color:rgba(20,190,235,.42)!important}
 .service-card[data-tone=navy] .svc-icon .num{color:rgba(8,13,84,.28)!important}
+
+/* Subtítulos: píldora más amplia para que el isotipo respire */
+.eyebrow-pill{padding:11px 26px 11px 12px;gap:13px;font-size:20px}
+.eyebrow-pill .eyebrow-iso{width:38px;height:38px}
+@media(max-width:560px){.eyebrow-pill{padding:9px 20px 9px 10px;font-size:18px}.eyebrow-pill .eyebrow-iso{width:32px;height:32px}}
