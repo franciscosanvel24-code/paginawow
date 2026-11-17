@@ -150,3 +150,15 @@ footer>div:first-child img,footer img{display:block;position:static;width:100%!i
   .wow-title-logo{width:2.85em!important;max-width:72vw}
   .story-signature{margin-top:38px}
 }
+
+/* Final visual refinements */
+.wow-logo-card .hero-isotipo{width:min(68%,310px)!important;height:auto!important;max-height:76%;object-fit:contain}
+.method{padding-top:clamp(72px,7vw,105px);padding-bottom:clamp(72px,7vw,105px)}
+.wow-method li{padding:23px 0}
+.founder-santoyo .founder-photo img{object-position:50% 48%}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,.78);opacity:1}
+@media(max-width:560px){
+  .method{padding-top:68px;padding-bottom:68px}
+  .wow-method li{padding:20px 0}
+  .wow-logo-card .hero-isotipo{width:min(64%,220px)!important}
+}
