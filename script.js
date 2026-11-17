@@ -23,7 +23,7 @@ form.addEventListener('submit', (event) => {
 
 /* Motor de rebote: mueve elementos dentro de su contenedor y los hace rebotar en sus paredes.
    overflow = cuánto puede salirse cada elemento del borde (0 = rebota justo en la pared). */
-function makeBouncer(container, items, { overflow = 0, speed = 1, onBounce } = {}) {
+function makeBouncer(container, items, { overflow = 0, padY = null, speed = 1, onBounce } = {}) {
   const state = items.map((el, n) => {
     const angle = (n * 2.39996) + 0.6;          // direcciones distintas para cada elemento
     const v = (0.9 + (n % 3) * 0.35) * speed;
@@ -39,7 +39,9 @@ function makeBouncer(container, items, { overflow = 0, speed = 1, onBounce } = {
     state.forEach((s) => {
       const w = s.el.offsetWidth, h = s.el.offsetHeight;
       const minX = -w * overflow, maxX = W - w * (1 - overflow);
-      const minY = -h * overflow, maxY = H - h * (1 - overflow);
+      /* padY: margen vertical para que una luz nunca toque el borde superior o inferior (evita líneas de corte) */
+      const minY = padY === null ? -h * overflow : padY;
+      const maxY = padY === null ? H - h * (1 - overflow) : Math.max(padY, H - h - padY);
       s.x += s.vx * dt; s.y += s.vy * dt;
       let hit = false;
       if (s.x <= minX || s.x >= maxX) { s.vx *= -1; s.x = Math.max(minX, Math.min(s.x, maxX)); hit = true; }
@@ -61,7 +63,7 @@ if (!reduceMotion) {
   /* Luces del fondo: rebotan entre las paredes de cada sección */
   document.querySelectorAll('main section, main .zona-luces').forEach((area) => {
     const lights = [...area.querySelectorAll(':scope > .blob, :scope > .luz')];
-    if (lights.length) makeBouncer(area, lights, { overflow: 0.45, speed: area.classList.contains('zona-luces') ? 1.3 : 0.9 });
+    if (lights.length) makeBouncer(area, lights, { overflow: 0.45, padY: 140, speed: area.classList.contains('zona-luces') ? 1.3 : 0.9 });
   });
 
   /* Caras WOW en el recuadro de contacto: rebotan y cambian de color en cada choque */

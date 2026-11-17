@@ -112,7 +112,7 @@ p{margin:0}
 
 /* Problema */
 .problem{background:var(--navy);color:var(--white)}
-.problem-mark{width:min(52vw,640px);right:-12%;top:-8%;opacity:.1}
+.problem-mark{width:min(52vw,640px);right:-12%;top:12%;opacity:.1}
 .statement{max-width:1120px;margin-bottom:clamp(64px,7vw,96px);font-size:clamp(38px,5.2vw,76px);line-height:1}
 .statement span{color:var(--cyan);display:block}
 .statement strong{display:block;margin-top:.12em}
@@ -219,7 +219,7 @@ p{margin:0}
 
 /* Equipo */
 .team{background:var(--navy);color:var(--white)}
-.team-mark{width:min(70vw,900px);right:-18%;bottom:-30%;opacity:.18}
+.team-mark{width:min(60vw,760px);right:-14%;bottom:14%;opacity:.18}
 .team-heading{max-width:1180px;margin:0 auto clamp(56px,6vw,84px);text-align:center}
 .team .eyebrow{color:var(--cyan);justify-content:center}
 .team-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.25em;font-size:clamp(38px,5.2vw,78px);line-height:1}
@@ -363,17 +363,16 @@ footer nav a:hover{color:var(--cyan)}
 /* ---------- Transiciones degradadas entre secciones ----------
    Cada sección termina fundiéndose en el color con el que empieza la siguiente. */
 :root{--fade:clamp(200px,22vw,340px);--glow:#1A3FB8}
-/* Entre secciones oscuras el salto pasa por un brillo azul principal para que se note la transición */
-.problem{background:linear-gradient(to bottom,var(--blue) 0,var(--glow) 70px,var(--navy) var(--fade),var(--navy) calc(100% - var(--fade)),var(--glow) 100%)}
-.brand-moment{background:linear-gradient(to bottom,var(--glow) 0,var(--navy) var(--fade),var(--navy) calc(100% - var(--fade)),var(--pale) 100%)}
-.services{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade)),var(--yellow) 100%)}
-.method{background:linear-gradient(to bottom,var(--yellow) 0,var(--yellow) calc(100% - var(--fade)),var(--white) 100%)}
-.portfolio{background:linear-gradient(to bottom,var(--white) 0,var(--white) calc(100% - var(--fade)),var(--navy) 100%)}
-.team{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade)),var(--pale) 100%)}
-.blog{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade)),#D6F6FF 100%)}
-.diagnostic{background:linear-gradient(to bottom,#D6F6FF 0,var(--white) var(--fade),var(--white) calc(100% - var(--fade)),var(--navy) 100%)}
-/* la portada termina en la cinta azul; el problema arranca con ese azul */
-.hero{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade)),var(--glow) calc(100% - 90px),var(--blue) 100%)}
+/* Degradados con curva suave entre secciones (sin quiebres visibles) */
+.hero{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--blue) 6%,var(--navy)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--blue) 18%,var(--navy)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--blue) 38%,var(--navy)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--blue) 60%,var(--navy)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--blue) 80%,var(--navy)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--blue) 93%,var(--navy)) calc(100% - var(--fade) * 0.07),var(--blue) 100%)}
+.problem{background:linear-gradient(to bottom,var(--blue) 0,color-mix(in srgb,var(--blue) 93%,var(--navy)) calc(var(--fade) * 0.07),color-mix(in srgb,var(--blue) 80%,var(--navy)) calc(var(--fade) * 0.17),color-mix(in srgb,var(--blue) 60%,var(--navy)) calc(var(--fade) * 0.3),color-mix(in srgb,var(--blue) 38%,var(--navy)) calc(var(--fade) * 0.45),color-mix(in srgb,var(--blue) 18%,var(--navy)) calc(var(--fade) * 0.62),color-mix(in srgb,var(--blue) 6%,var(--navy)) calc(var(--fade) * 0.8),var(--navy) calc(var(--fade) * 1.0),var(--navy) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--glow) 6%,var(--navy)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--glow) 18%,var(--navy)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--glow) 38%,var(--navy)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--glow) 60%,var(--navy)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--glow) 80%,var(--navy)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--glow) 93%,var(--navy)) calc(100% - var(--fade) * 0.07),var(--glow) 100%)}
+.brand-moment{background:linear-gradient(to bottom,var(--glow) 0,color-mix(in srgb,var(--glow) 93%,var(--navy)) calc(var(--fade) * 0.07),color-mix(in srgb,var(--glow) 80%,var(--navy)) calc(var(--fade) * 0.17),color-mix(in srgb,var(--glow) 60%,var(--navy)) calc(var(--fade) * 0.3),color-mix(in srgb,var(--glow) 38%,var(--navy)) calc(var(--fade) * 0.45),color-mix(in srgb,var(--glow) 18%,var(--navy)) calc(var(--fade) * 0.62),color-mix(in srgb,var(--glow) 6%,var(--navy)) calc(var(--fade) * 0.8),var(--navy) calc(var(--fade) * 1.0),var(--navy) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--pale) 6%,var(--navy)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--pale) 18%,var(--navy)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--pale) 38%,var(--navy)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--pale) 60%,var(--navy)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--pale) 80%,var(--navy)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--pale) 93%,var(--navy)) calc(100% - var(--fade) * 0.07),var(--pale) 100%)}
+.services{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--yellow) 6%,var(--pale)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--yellow) 18%,var(--pale)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--yellow) 38%,var(--pale)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--yellow) 60%,var(--pale)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--yellow) 80%,var(--pale)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--yellow) 93%,var(--pale)) calc(100% - var(--fade) * 0.07),var(--yellow) 100%)}
+.method{background:linear-gradient(to bottom,var(--yellow) 0,var(--yellow) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--white) 6%,var(--yellow)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--white) 18%,var(--yellow)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--white) 38%,var(--yellow)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--white) 60%,var(--yellow)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--white) 80%,var(--yellow)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--white) 93%,var(--yellow)) calc(100% - var(--fade) * 0.07),var(--white) 100%)}
+.portfolio{background:linear-gradient(to bottom,var(--white) 0,var(--white) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--navy) 6%,var(--white)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--navy) 18%,var(--white)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--navy) 38%,var(--white)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--navy) 60%,var(--white)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--navy) 80%,var(--white)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--navy) 93%,var(--white)) calc(100% - var(--fade) * 0.07),var(--navy) 100%)}
+.team{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--pale) 6%,var(--navy)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--pale) 18%,var(--navy)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--pale) 38%,var(--navy)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--pale) 60%,var(--navy)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--pale) 80%,var(--navy)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--pale) 93%,var(--navy)) calc(100% - var(--fade) * 0.07),var(--pale) 100%)}
+.blog{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade) * 1.0),color-mix(in srgb,#D6F6FF 6%,var(--pale)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,#D6F6FF 18%,var(--pale)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,#D6F6FF 38%,var(--pale)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,#D6F6FF 60%,var(--pale)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,#D6F6FF 80%,var(--pale)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,#D6F6FF 93%,var(--pale)) calc(100% - var(--fade) * 0.07),#D6F6FF 100%)}
+.diagnostic{background:linear-gradient(to bottom,#D6F6FF 0,color-mix(in srgb,#D6F6FF 93%,var(--white)) calc(var(--fade) * 0.07),color-mix(in srgb,#D6F6FF 80%,var(--white)) calc(var(--fade) * 0.17),color-mix(in srgb,#D6F6FF 60%,var(--white)) calc(var(--fade) * 0.3),color-mix(in srgb,#D6F6FF 38%,var(--white)) calc(var(--fade) * 0.45),color-mix(in srgb,#D6F6FF 18%,var(--white)) calc(var(--fade) * 0.62),color-mix(in srgb,#D6F6FF 6%,var(--white)) calc(var(--fade) * 0.8),var(--white) calc(var(--fade) * 1.0),var(--white) calc(100% - var(--fade) * 1.0),color-mix(in srgb,var(--navy) 6%,var(--white)) calc(100% - var(--fade) * 0.8),color-mix(in srgb,var(--navy) 18%,var(--white)) calc(100% - var(--fade) * 0.62),color-mix(in srgb,var(--navy) 38%,var(--white)) calc(100% - var(--fade) * 0.45),color-mix(in srgb,var(--navy) 60%,var(--white)) calc(100% - var(--fade) * 0.3),color-mix(in srgb,var(--navy) 80%,var(--white)) calc(100% - var(--fade) * 0.17),color-mix(in srgb,var(--navy) 93%,var(--white)) calc(100% - var(--fade) * 0.07),var(--navy) 100%)}
 /* La cinta se funde arriba y abajo con el azul que la rodea, sin cortes duros */
 .ticker{box-shadow:0 0 50px 22px rgba(24,125,250,.55)}
 /* margen extra abajo para que el contenido no quede sobre el degradado */
@@ -413,3 +412,6 @@ footer nav a:hover{color:var(--cyan)}
 .zona-luces .blob-t1{left:-100px;top:55%;opacity:.45}
 .zona-luces .blob-t2{right:0;top:62%;opacity:.35}
 .zona-luces .blob-t3{left:40%;top:85%;opacity:.3}
+
+/* Las marcas de agua se desvanecen en sus orillas para no marcar cortes entre secciones */
+.marca-agua{-webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent 100%);mask-image:radial-gradient(closest-side,#000 70%,transparent 100%)}
