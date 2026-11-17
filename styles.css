@@ -386,3 +386,12 @@ footer nav a:hover{color:var(--cyan)}
 .eyebrow-pill:hover .eyebrow-iso{rotate:20deg}
 .team .eyebrow,.hero .eyebrow,.problem .eyebrow,.brand-moment .eyebrow,.method .eyebrow,.bounce-copy .eyebrow{color:inherit}
 .method .eyebrow-pill{box-shadow:0 4px 0 var(--navy)}
+
+/* Problema: números grandes del color de la línea superior de cada tarjeta */
+.symptom-cards b{display:block;font-size:clamp(40px,4vw,56px);line-height:1;letter-spacing:-.04em}
+.symptom-cards article:nth-child(1) b{color:var(--blue)}
+.symptom-cards article:nth-child(2) b{color:var(--cyan)}
+.symptom-cards article:nth-child(3) b{color:var(--yellow)}
+.symptom-cards h3{margin-top:30px}
+/* Método: títulos en azul marino con sombra blanca (negativo de los números) */
+.method-list h3{color:var(--navy);text-shadow:0 3px 0 var(--white),0 0 1px var(--white)}
