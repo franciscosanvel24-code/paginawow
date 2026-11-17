@@ -441,3 +441,8 @@ main{position:relative}
 .team-mark{width:min(34vw,460px);opacity:.2;top:42%;bottom:auto}
 .team-mark-izq{left:calc(-1 * min(14vw,200px));right:auto}
 .team-mark-der{right:calc(-1 * min(14vw,200px));rotate:24deg}
+
+/* Co-Founders: una sola marca de agua centrada detrás de la insignia */
+.team-mark-centro{position:absolute;left:50%;top:50%;width:min(42vw,560px);translate:-50% -50%;opacity:.22;z-index:0}
+.founders>.founder,.founders>.team-badge{position:relative;z-index:1}
+.team-badge{z-index:3!important}
