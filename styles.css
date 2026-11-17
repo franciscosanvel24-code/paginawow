@@ -201,6 +201,8 @@ p{margin:0}
 .social-link{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;background:var(--navy);color:var(--white);font-weight:700;font-size:15px;transition:background .2s,transform .2s}
 .social-link svg{width:20px;height:20px}
 .social-link:hover{background:var(--blue);transform:translateY(-2px)}
+.social-pending{background:var(--pale);color:var(--muted-light);border:1px dashed rgba(8,13,84,.3);cursor:default}
+.social-pending:hover{background:var(--pale);transform:none}
 .client-next{background:var(--navy);color:var(--white);border-radius:var(--radius);position:relative;overflow:hidden;justify-content:flex-end}
 .client-next .client-tag{color:var(--cyan)}
 .client-next .client-desc{color:var(--muted-dark)}

@@ -123,3 +123,10 @@ document.querySelectorAll('.founder[data-url]').forEach((card) => {
   card.classList.add('has-url');
   card.addEventListener('click', (e) => { if (!e.target.closest('a')) window.open(url, '_blank', 'noopener'); });
 });
+
+/* Redes de clientes: un botón con data-url vacío se muestra como pendiente; con URL se activa */
+document.querySelectorAll('.social-link[data-url]').forEach((link) => {
+  const url = link.dataset.url.trim();
+  if (url) { link.href = url; link.classList.remove('social-pending'); }
+  else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
+});
