@@ -381,11 +381,11 @@ footer nav a:hover{color:var(--cyan)}
 
 /* ---------- Subtítulos de sección: píldora con isotipo y letra redonda (más casual) ---------- */
 .eyebrow{letter-spacing:0;text-transform:none;font-size:inherit;margin-bottom:22px}
-.eyebrow-pill{display:inline-flex;align-items:center;gap:10px;padding:7px 18px 7px 8px;border-radius:999px;background:var(--white);color:var(--navy);font:600 19px/1 'Fredoka','WOW Helvetica',Helvetica,Arial,sans-serif;letter-spacing:.01em;rotate:-2deg;box-shadow:0 4px 0 var(--blue)}
+.eyebrow-pill{display:inline-flex;align-items:center;gap:10px;padding:7px 18px 7px 8px;border-radius:999px;background:var(--white);color:var(--navy);font:600 19px/1 'Fredoka','WOW Helvetica',Helvetica,Arial,sans-serif;letter-spacing:.01em;rotate:-2deg;box-shadow:inset 0 0 0 2px var(--blue),0 4px 0 var(--blue)}
 .eyebrow-pill .eyebrow-iso{width:34px;height:34px;margin:0;rotate:-12deg;transition:rotate .5s ease}
 .eyebrow-pill:hover .eyebrow-iso{rotate:20deg}
 .team .eyebrow,.hero .eyebrow,.problem .eyebrow,.brand-moment .eyebrow,.method .eyebrow,.bounce-copy .eyebrow{color:inherit}
-.method .eyebrow-pill{box-shadow:0 4px 0 var(--navy)}
+.method .eyebrow-pill{box-shadow:inset 0 0 0 2px var(--navy),0 4px 0 var(--navy)}
 
 /* Problema: números grandes del color de la línea superior de cada tarjeta */
 .symptom-cards b{display:block;font-size:clamp(40px,4vw,56px);line-height:1;letter-spacing:-.04em}
