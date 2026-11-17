@@ -431,3 +431,13 @@ main{position:relative}
 /* Portada: "Ver portafolio" a la derecha, centrado bajo el círculo, sin tocar el anillo ni la frase en arco */
 .hero-stage{grid-template-rows:auto auto;row-gap:clamp(70px,7vw,96px);pointer-events:none}
 .hero-stage .hero-portafolio{pointer-events:auto;justify-self:center}
+
+/* Servicios: isotipo WOW de color en lugar del círculo, con el número al lado */
+.svc-icon{display:flex;align-items:center;gap:12px}
+.svc-icon img{width:52px;height:auto;rotate:-12deg;transition:rotate .5s ease}
+.service-card:hover .svc-icon img{rotate:12deg}
+.service-card .svc-icon .num{display:inline;width:auto;height:auto;background:none!important;color:var(--navy)!important;font-size:15px;font-weight:700;letter-spacing:2px}
+/* Co-Founders: marca de agua a ambos lados, fuera del área de las tarjetas */
+.team-mark{width:min(34vw,460px);opacity:.2;top:42%;bottom:auto}
+.team-mark-izq{left:calc(-1 * min(14vw,200px));right:auto}
+.team-mark-der{right:calc(-1 * min(14vw,200px));rotate:24deg}
