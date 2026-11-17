@@ -88,6 +88,8 @@ if (!reduceMotion) {
     });
   };
   measure();
+  /* posición inicial de cada luz (antes de animarse) para que ninguna se quede arriba a la izquierda */
+  state.forEach((s) => { s.el.style.transform = `translate(${s.x}px, ${s.y}px)`; });
   window.addEventListener('resize', measure);
   let last = 0;
   const tick = (t) => {
