@@ -376,3 +376,11 @@ footer nav a:hover{color:var(--cyan)}
 .ticker{box-shadow:0 0 50px 22px rgba(24,125,250,.55)}
 /* margen extra abajo para que el contenido no quede sobre el degradado */
 .services,.method,.portfolio,.team,.brand-moment,.diagnostic,.problem,.blog{padding-bottom:calc(clamp(88px,10vw,150px) + var(--fade) * .45)}
+
+/* ---------- Subtítulos de sección: píldora con isotipo y letra redonda (más casual) ---------- */
+.eyebrow{letter-spacing:0;text-transform:none;font-size:inherit;margin-bottom:22px}
+.eyebrow-pill{display:inline-flex;align-items:center;gap:10px;padding:7px 18px 7px 8px;border-radius:999px;background:var(--white);color:var(--navy);font:600 19px/1 'Fredoka','WOW Helvetica',Helvetica,Arial,sans-serif;letter-spacing:.01em;rotate:-2deg;box-shadow:0 4px 0 var(--blue)}
+.eyebrow-pill .eyebrow-iso{width:34px;height:34px;margin:0;rotate:-12deg;transition:rotate .5s ease}
+.eyebrow-pill:hover .eyebrow-iso{rotate:20deg}
+.team .eyebrow,.hero .eyebrow,.problem .eyebrow,.brand-moment .eyebrow,.method .eyebrow,.bounce-copy .eyebrow{color:inherit}
+.method .eyebrow-pill{box-shadow:0 4px 0 var(--navy)}
