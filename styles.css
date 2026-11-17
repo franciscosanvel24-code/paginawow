@@ -395,3 +395,21 @@ footer nav a:hover{color:var(--cyan)}
 .symptom-cards h3{margin-top:30px}
 /* Método: títulos en azul marino con sombra blanca (negativo de los números) */
 .method-list h3{color:var(--navy);text-shadow:0 3px 0 var(--white),0 0 1px var(--white)}
+
+/* Foto de perfil del cliente dentro del círculo (reemplaza las iniciales cuando hay foto) */
+.client-avatar{overflow:hidden}
+.client-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ---------- Zona compartida Portafolio + Co-Founders ----------
+   Las luces viven en el contenedor y cruzan el salto entre ambas secciones. */
+.zona-luces{position:relative;overflow:hidden;isolation:isolate}
+.zona-luces>.blob{z-index:1;mix-blend-mode:normal}
+.zona-luces>.section{overflow:visible;z-index:auto}
+.zona-luces>.section>*:not(.blob):not(.marca-agua):not(.luz){z-index:2}
+.zona-luces>.section>.marca-agua{z-index:1}
+.zona-luces .blob-p1{right:-120px;top:8%}
+.zona-luces .blob-p2{left:5%;top:30%}
+.zona-luces .blob-p3{left:45%;top:2%}
+.zona-luces .blob-t1{left:-100px;top:55%;opacity:.45}
+.zona-luces .blob-t2{right:0;top:62%;opacity:.35}
+.zona-luces .blob-t3{left:40%;top:85%;opacity:.3}

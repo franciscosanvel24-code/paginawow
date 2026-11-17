@@ -59,9 +59,9 @@ function makeBouncer(container, items, { overflow = 0, speed = 1, onBounce } = {
 
 if (!reduceMotion) {
   /* Luces del fondo: rebotan entre las paredes de cada sección */
-  document.querySelectorAll('main section').forEach((section) => {
-    const lights = [...section.querySelectorAll(':scope > .blob, :scope > .luz')];
-    if (lights.length) makeBouncer(section, lights, { overflow: 0.45, speed: 0.9 });
+  document.querySelectorAll('main section, main .zona-luces').forEach((area) => {
+    const lights = [...area.querySelectorAll(':scope > .blob, :scope > .luz')];
+    if (lights.length) makeBouncer(area, lights, { overflow: 0.45, speed: area.classList.contains('zona-luces') ? 1.3 : 0.9 });
   });
 
   /* Caras WOW en el recuadro de contacto: rebotan y cambian de color en cada choque */
