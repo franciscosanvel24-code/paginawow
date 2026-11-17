@@ -197,6 +197,11 @@ p{margin:0}
 .client-services{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
 .client-services li{font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;background:rgba(24,125,250,.12);color:var(--navy)}
 .client-links{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px}
+/* Tarjeta de cliente compacta: todo centrado vertical y horizontalmente */
+.client-card.glass{justify-content:center;align-items:center;text-align:center;gap:26px}
+.client-card.glass .client-top{flex-direction:column;gap:14px}
+.client-card.glass .client-avatar{width:96px;height:96px;font-size:32px}
+.client-card.glass .client-links{margin-top:0;justify-content:center}
 .social-link{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;background:var(--navy);color:var(--white);font-weight:700;font-size:15px;transition:background .2s,transform .2s}
 .social-link svg{width:20px;height:20px}
 .social-link:hover{background:var(--blue);transform:translateY(-2px)}
