@@ -186,7 +186,7 @@ p{margin:0}
 .client-next .client-tag{color:var(--cyan)}
 .client-next .client-desc{color:var(--muted-dark)}
 .client-next .button{align-self:flex-start;margin-top:8px}
-.next-mark{width:300px;right:-60px;top:-50px;opacity:.14}
+.next-mark{width:300px;right:-60px;top:-50px;opacity:.12}
 
 /* Equipo */
 .team{background:var(--navy);color:var(--white)}
