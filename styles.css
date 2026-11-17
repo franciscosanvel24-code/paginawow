@@ -35,8 +35,8 @@ p{margin:0}
 .button-small{padding:12px 20px;font-size:15px;box-shadow:0 4px 0 var(--navy)}
 .text-link{font-weight:700;color:var(--white);border-bottom:2px solid var(--cyan);padding-bottom:3px}
 /* Botón en negativo del amarillo: fondo azul profundo, borde y texto amarillos */
-.button-negativo{background:var(--navy);color:var(--yellow);border:2px solid var(--yellow);box-shadow:0 7px 0 var(--yellow)}
-.button-negativo:hover{box-shadow:0 4px 0 var(--yellow)}
+.button-negativo{background:var(--navy);color:var(--yellow);box-shadow:inset 0 0 0 2px var(--yellow),0 7px 0 var(--yellow)}
+.button-negativo:hover{box-shadow:inset 0 0 0 2px var(--yellow),0 4px 0 var(--yellow)}
 
 /* Cristal templado */
 .glass{position:relative;border-radius:var(--radius);background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(255,255,255,.52));border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 50px -18px rgba(8,13,84,.35),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(8,13,84,.06);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);overflow:hidden}
