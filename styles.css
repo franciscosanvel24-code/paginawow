@@ -377,7 +377,7 @@ footer nav a:hover{color:var(--cyan)}
 /* La cinta se funde arriba y abajo con el azul que la rodea, sin cortes duros */
 .ticker{box-shadow:0 0 50px 22px rgba(24,125,250,.55)}
 /* margen extra abajo para que el contenido no quede sobre el degradado */
-.services,.method,.portfolio,.team,.brand-moment,.diagnostic,.problem,.blog{padding-bottom:calc(clamp(88px,10vw,150px) + var(--fade) * .45)}
+.services,.method,.portfolio,.team,.brand-moment,.diagnostic,.problem,.blog{padding-bottom:calc(clamp(56px,6vw,96px) + var(--fade) * .25)}
 
 /* ---------- Subtítulos de sección: píldora con isotipo y letra redonda (más casual) ---------- */
 .eyebrow{letter-spacing:0;text-transform:none;font-size:inherit;margin-bottom:22px}
@@ -454,3 +454,6 @@ main{position:relative}
 /* Método: texto de cada tarjeta un poco más grande y en azul marino más intenso */
 .method-list li.glass p{font-size:18px;line-height:1.5;color:#050940;-webkit-text-stroke:.25px #050940}
 @media(max-width:560px){.method-list li.glass p{font-size:17px}}
+
+/* Separación entre secciones más corta */
+.section{padding-top:clamp(64px,7vw,110px)}
