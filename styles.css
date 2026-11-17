@@ -156,7 +156,7 @@ footer>div:first-child img,footer img{display:block;position:static;width:100%!i
 .method{padding-top:clamp(72px,7vw,105px);padding-bottom:clamp(72px,7vw,105px)}
 .wow-method li{padding:23px 0}
 .founder-santoyo .founder-photo img{object-position:50% 48%}
-.contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,.78);opacity:1}
+.contact-form input::placeholder,.contact-form textarea::placeholder,.contact-form input::-webkit-input-placeholder,.contact-form textarea::-webkit-input-placeholder{color:#fff!important;opacity:.88!important}
 @media(max-width:560px){
   .method{padding-top:68px;padding-bottom:68px}
   .wow-method li{padding:20px 0}
