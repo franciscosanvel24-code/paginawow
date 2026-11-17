@@ -353,14 +353,17 @@ footer nav a:hover{color:var(--cyan)}
 
 /* ---------- Transiciones degradadas entre secciones ----------
    Cada sección termina fundiéndose en el color con el que empieza la siguiente. */
-:root{--fade:clamp(150px,16vw,260px)}
-.problem{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade)),#0B1270 100%)}
-.brand-moment{background:linear-gradient(to bottom,#0B1270 0,var(--navy) 40%,var(--navy) calc(100% - var(--fade)),var(--pale) 100%)}
+:root{--fade:clamp(200px,22vw,340px);--glow:#1A3FB8}
+/* Entre secciones oscuras el salto pasa por un brillo azul principal para que se note la transición */
+.problem{background:linear-gradient(to bottom,var(--glow) 0,var(--navy) var(--fade),var(--navy) calc(100% - var(--fade)),var(--glow) 100%)}
+.brand-moment{background:linear-gradient(to bottom,var(--glow) 0,var(--navy) var(--fade),var(--navy) calc(100% - var(--fade)),var(--pale) 100%)}
 .services{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade)),var(--yellow) 100%)}
 .method{background:linear-gradient(to bottom,var(--yellow) 0,var(--yellow) calc(100% - var(--fade)),var(--white) 100%)}
 .portfolio{background:linear-gradient(to bottom,var(--white) 0,var(--white) calc(100% - var(--fade)),var(--navy) 100%)}
 .team{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade)),var(--pale) 100%)}
-.blog{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade)),var(--white) 100%)}
-.diagnostic{background:linear-gradient(to bottom,var(--white) 0,var(--white) calc(100% - var(--fade)),var(--navy) 100%)}
+.blog{background:linear-gradient(to bottom,var(--pale) 0,var(--pale) calc(100% - var(--fade)),#D6F6FF 100%)}
+.diagnostic{background:linear-gradient(to bottom,#D6F6FF 0,var(--white) var(--fade),var(--white) calc(100% - var(--fade)),var(--navy) 100%)}
+/* la portada termina en la cinta azul; el problema arranca con ese azul */
+.hero{background:linear-gradient(to bottom,var(--navy) 0,var(--navy) calc(100% - var(--fade)),var(--glow) 100%)}
 /* margen extra abajo para que el contenido no quede sobre el degradado */
-.services,.method,.portfolio,.team,.brand-moment,.diagnostic{padding-bottom:calc(clamp(88px,10vw,150px) + var(--fade) * .55)}
+.services,.method,.portfolio,.team,.brand-moment,.diagnostic,.problem,.blog{padding-bottom:calc(clamp(88px,10vw,150px) + var(--fade) * .45)}
