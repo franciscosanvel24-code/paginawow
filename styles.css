@@ -219,7 +219,7 @@ p{margin:0}
 
 /* Equipo */
 .team{background:var(--navy);color:var(--white)}
-.team-mark{width:min(70vw,900px);right:-18%;bottom:-30%;opacity:.07}
+.team-mark{width:min(70vw,900px);right:-18%;bottom:-30%;opacity:.18}
 .team-heading{max-width:1180px;margin:0 auto clamp(56px,6vw,84px);text-align:center}
 .team .eyebrow{color:var(--cyan);justify-content:center}
 .team-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.25em;font-size:clamp(38px,5.2vw,78px);line-height:1}
