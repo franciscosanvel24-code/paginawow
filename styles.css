@@ -138,3 +138,15 @@ footer>div:first-child img,footer img{display:block;position:static;width:100%!i
 @media(max-width:560px){
   .brand{width:112px}.hero h1.hero-title{font-size:clamp(43px,11.5vw,61px)}.wow-stage{height:330px}.wow-logo-card{width:min(80vw,350px);border-radius:28px;padding:26px;box-shadow:11px 11px 0 var(--navy)}.orbit-one{width:300px;height:300px}.orbit-two{width:220px;height:220px}.spark{width:32px;height:72px}.spark-one{left:6%}.spark-two{left:54%}.spark-three{right:4%;bottom:2%}.brand-moment{min-height:auto}.brand-moment:after{display:none}.wow-story h2{font-size:clamp(58px,18vw,82px)}.story-signature img{width:180px}.wow-method li{grid-template-columns:64px 1fr}.wow-method li>span{font-size:38px}.wow-method h3{font-size:26px}
 }
+
+/* Brand section refinement: logo as the WOW wordmark and direct CTA */
+.wow-story h2.wow-title-lockup{margin-bottom:46px}
+.wow-title-line{display:inline-flex!important;align-items:center;gap:.16em;white-space:nowrap}
+.wow-title-logo{display:block;width:3.05em!important;max-width:58vw;height:auto!important;flex:none;object-fit:contain}
+.story-signature{margin-top:48px;display:block}
+.story-signature .brand-cta{color:var(--navy)}
+@media(max-width:560px){
+  .wow-title-line{gap:.12em}
+  .wow-title-logo{width:2.85em!important;max-width:72vw}
+  .story-signature{margin-top:38px}
+}
