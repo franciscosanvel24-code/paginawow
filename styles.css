@@ -339,6 +339,7 @@ footer nav a:hover{color:var(--cyan)}
   .founder-humberto .founder-inner{box-shadow:12px 12px 0 var(--cyan)}
 }
 @media(max-width:560px){
+  .service-card{min-height:0}
   .nav{height:72px}
   .brand-plate{padding:8px 13px;border-radius:13px}
   .brand-plate img{width:84px}
@@ -393,7 +394,7 @@ footer nav a:hover{color:var(--cyan)}
 .symptom-cards article:nth-child(3) b{color:var(--yellow)}
 .symptom-cards h3{margin-top:30px}
 /* Método: títulos en azul marino con sombra blanca (negativo de los números) */
-.method-list h3{color:var(--navy);text-shadow:0 3px 0 var(--white),0 0 1px var(--white)}
+.method-list h3{color:var(--white);text-shadow:0 2px 0 var(--navy),0 0 1px var(--navy)}
 
 /* Foto de perfil del cliente dentro del círculo (reemplaza las iniciales cuando hay foto) */
 .client-avatar{overflow:hidden}
@@ -415,3 +416,14 @@ footer nav a:hover{color:var(--cyan)}
 
 /* Las marcas de agua se desvanecen en sus orillas para no marcar cortes entre secciones */
 .marca-agua{-webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent 100%);mask-image:radial-gradient(closest-side,#000 70%,transparent 100%)}
+
+/* Servicios: tarjetas a la medida de su contenido */
+.service-grid{align-items:start}
+.service-card{min-height:0;padding:26px 26px 28px}
+.service-card h3{margin:22px 0 10px}
+/* Capa global de luces: viajan entre secciones vecinas (script.js las mueve aquí) */
+main{position:relative}
+.capa-luces{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.capa-luces>.blob,.capa-luces>.luz{position:absolute;left:0;top:0;right:auto;bottom:auto}
+.section>*:not(.blob):not(.marca-agua):not(.luz){z-index:2}
+.zona-luces{overflow:visible;isolation:auto}

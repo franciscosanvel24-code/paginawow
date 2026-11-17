@@ -61,10 +61,54 @@ function makeBouncer(container, items, { overflow = 0, padY = null, speed = 1, o
 
 if (!reduceMotion) {
   /* Luces del fondo: rebotan entre las paredes de cada sección */
-  document.querySelectorAll('main section, main .zona-luces').forEach((area) => {
-    const lights = [...area.querySelectorAll(':scope > .blob, :scope > .luz')];
-    if (lights.length) makeBouncer(area, lights, { overflow: 0.45, padY: 140, speed: area.classList.contains('zona-luces') ? 1.3 : 0.9 });
+  /* Luces del fondo: se mueven a una capa común sobre los fondos de las secciones y
+     rebotan dentro de su sección y la mitad de las vecinas, así cruzan cada salto de página. */
+  const main = document.querySelector('main');
+  const layer = document.createElement('div');
+  layer.className = 'capa-luces';
+  layer.setAttribute('aria-hidden', 'true');
+  main.prepend(layer);
+  const lights = [...main.querySelectorAll('.blob, .luz')].filter((el) => !el.closest('.capa-luces'));
+  const state = lights.map((el, n) => {
+    const origin = el.closest('.zona-luces') || el.closest('section');
+    const r = el.getBoundingClientRect(), m = main.getBoundingClientRect();
+    const angle = n * 2.39996 + 0.6, v = 0.9 + (n % 3) * 0.35;
+    layer.appendChild(el);
+    return { el, origin, x: r.left - m.left, y: r.top - m.top, vx: Math.cos(angle) * v, vy: Math.sin(angle) * v };
   });
+  let bounds = [];
+  const measure = () => {
+    const mTop = main.getBoundingClientRect().top;
+    bounds = state.map((s) => {
+      const o = s.origin.getBoundingClientRect();
+      const prev = s.origin.previousElementSibling, next = s.origin.nextElementSibling;
+      const reachUp = prev && prev.getBoundingClientRect ? Math.min(prev.getBoundingClientRect().height * 0.5, 420) : 0;
+      const reachDown = next && next.getBoundingClientRect ? Math.min(next.getBoundingClientRect().height * 0.5, 420) : 0;
+      return { top: o.top - mTop - reachUp, bottom: o.bottom - mTop + reachDown };
+    });
+  };
+  measure();
+  window.addEventListener('resize', measure);
+  let last = 0;
+  const tick = (t) => {
+    const dt = last ? Math.min((t - last) / 16.67, 3) : 1;
+    last = t;
+    const W = main.clientWidth, H = main.clientHeight;
+    const viewTop = window.scrollY - main.offsetTop - 600, viewBottom = viewTop + window.innerHeight + 1200;
+    state.forEach((s, i) => {
+      const b = bounds[i];
+      if (b.bottom < viewTop || b.top > viewBottom) return;   // fuera de pantalla: no se calcula
+      const w = s.el.offsetWidth, h = s.el.offsetHeight;
+      const minX = -w * 0.45, maxX = W - w * 0.55;
+      const minY = Math.max(-h * 0.3, b.top), maxY = Math.min(H - h * 0.7, b.bottom - h);
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      if (s.x <= minX || s.x >= maxX) { s.vx *= -1; s.x = Math.max(minX, Math.min(s.x, maxX)); }
+      if (s.y <= minY || s.y >= maxY) { s.vy *= -1; s.y = Math.max(minY, Math.min(s.y, maxY)); }
+      s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 
   /* Caras WOW en el recuadro de contacto: rebotan y cambian de color en cada choque */
   const box = document.getElementById('bounceBox');
