@@ -26,7 +26,8 @@ form.addEventListener('submit', (event) => {
   const box = document.getElementById('bounceBox');
   const iso = document.getElementById('bounceIso');
   if (!box || !iso) return;
-  const colors = ['assets/wow-isotipo-trazo.png', 'assets/wow-iso-amarillo.png', 'assets/wow-iso-blanco.png'];
+  const colors = ['assets/wow-isotipo.svg', 'assets/wow-isotipo-amarillo.svg', 'assets/wow-isotipo-blanco.svg'];
+  colors.forEach((src) => { const pre = new Image(); pre.src = src; });
   let colorIndex = 0;
   let x = 40, y = 40, vx = 1.6, vy = 1.25, rot = -12, running = false, last = 0;
 
