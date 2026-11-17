@@ -429,8 +429,6 @@ main{position:relative}
 .zona-luces{overflow:visible;isolation:auto}
 
 /* Portada: "Ver portafolio" a la derecha, centrado bajo el círculo, sin tocar el anillo ni la frase en arco */
-.hero-stage{grid-template-rows:auto auto;row-gap:clamp(70px,7vw,96px);pointer-events:none}
-.hero-stage .hero-portafolio{pointer-events:auto;justify-self:center}
 
 /* Servicios: isotipo WOW de color en lugar del círculo, con el número al lado */
 .svc-icon{display:flex;align-items:center;gap:12px}
