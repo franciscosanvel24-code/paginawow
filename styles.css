@@ -459,3 +459,11 @@ main{position:relative}
 
 /* Separación entre secciones más corta */
 .section{padding-top:clamp(64px,7vw,110px)}
+
+/* Servicios: el índice va como número grande y tenue en la esquina superior derecha de cada tarjeta */
+.service-card .svc-icon{position:static}
+.service-card .svc-icon .num{position:absolute;top:16px;right:22px;font-size:46px!important;font-weight:700;letter-spacing:-.04em!important;line-height:1;color:rgba(8,13,84,.14)!important;pointer-events:none}
+.service-card[data-tone=blue] .svc-icon .num{color:rgba(24,125,250,.32)!important}
+.service-card[data-tone=yellow] .svc-icon .num{color:rgba(230,180,0,.45)!important}
+.service-card[data-tone=cyan] .svc-icon .num{color:rgba(20,190,235,.42)!important}
+.service-card[data-tone=navy] .svc-icon .num{color:rgba(8,13,84,.28)!important}
