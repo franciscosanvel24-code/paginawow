@@ -177,7 +177,7 @@ p{margin:0}
 .method-list li.glass:before{background:linear-gradient(120deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 40%)}
 .method-list li.glass p{color:var(--navy)}
 /* Números del método en blanco, con sombra azul marino para que se lean sobre el amarillo */
-.method-list li>span{color:var(--white);text-shadow:0 3px 0 var(--navy),0 0 1px var(--navy)}
+.method-list li>span{color:var(--blue);text-shadow:0 3px 0 var(--navy),0 0 1px var(--navy)}
 
 /* Portafolio */
 .portfolio{background:var(--white)}
@@ -394,7 +394,7 @@ footer nav a:hover{color:var(--cyan)}
 .symptom-cards article:nth-child(3) b{color:var(--yellow)}
 .symptom-cards h3{margin-top:30px}
 /* Método: títulos en azul marino con sombra blanca (negativo de los números) */
-.method-list h3{color:var(--white);text-shadow:0 2px 0 var(--navy),0 0 1px var(--navy)}
+.method-list h3{color:var(--blue);text-shadow:0 2px 0 var(--navy),0 0 1px var(--navy)}
 
 /* Foto de perfil del cliente dentro del círculo (reemplaza las iniciales cuando hay foto) */
 .client-avatar{overflow:hidden}
