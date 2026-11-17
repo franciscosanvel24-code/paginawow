@@ -164,7 +164,7 @@ p{margin:0}
 .method{background:var(--yellow);display:grid;grid-template-columns:.9fr 1.1fr;gap:7vw;align-items:center}
 .method .eyebrow{color:var(--navy)}
 .method-intro h2{font-size:clamp(42px,5.2vw,76px);line-height:1}
-.method-intro h2 span{display:inline-block;margin-top:.14em;background:var(--navy);color:var(--yellow);padding:.08em .18em .14em;line-height:1.02;border-radius:6px}
+.method-intro h2 span{display:inline-block;margin-top:.14em;background:var(--navy);color:var(--white);padding:.08em .18em .14em;line-height:1.02;border-radius:6px}
 .method-summary{font-size:19px;margin-top:28px;max-width:560px}
 .method-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
 .method-list li{display:grid;grid-template-columns:84px 1fr;gap:16px;padding:26px 28px;align-items:start}
