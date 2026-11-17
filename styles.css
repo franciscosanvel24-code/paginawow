@@ -176,6 +176,12 @@ p{margin:0}
 .portfolio{background:var(--white)}
 .blob-p1{width:520px;height:520px;background:var(--cyan);opacity:.45;right:-120px;top:20%}
 .blob-p2{width:420px;height:420px;background:var(--yellow);opacity:.6;left:10%;bottom:-120px}
+.blob-p3{width:400px;height:400px;background:var(--blue);opacity:.4;left:45%;top:5%}
+/* Destellos: las luces del portafolio se encienden y se apagan mientras rebotan */
+.flash{animation:flash 2.6s ease-in-out infinite}
+.flash-2{animation-duration:3.4s;animation-delay:-1.2s}
+.flash-3{animation-duration:2.2s;animation-delay:-.6s}
+@keyframes flash{0%,100%{opacity:.2;filter:blur(70px)}45%{opacity:.75;filter:blur(45px)}55%{opacity:.85;filter:blur(40px)}}
 .client-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;margin-top:60px;max-width:1180px}
 .client-card{padding:32px;display:flex;flex-direction:column;gap:18px;min-height:340px;transition:transform .3s ease}
 .client-card:hover{transform:translateY(-6px)}
