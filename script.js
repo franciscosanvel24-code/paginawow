@@ -178,3 +178,18 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
   if (url) { link.href = url; link.classList.remove('social-pending'); }
   else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
 });
+
+/* Redes de WOW: quedan listas para activarse al pegar las URLs reales en data-url. */
+document.querySelectorAll('.footer-social[data-url]').forEach((link) => {
+  const url = link.dataset.url.trim();
+  if (url) {
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.classList.remove('is-pending');
+    link.removeAttribute('aria-disabled');
+    link.removeAttribute('title');
+  } else {
+    link.addEventListener('click', (event) => event.preventDefault());
+  }
+});
