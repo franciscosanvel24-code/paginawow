@@ -27,6 +27,8 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Build WOW Ideas
+        run: node scripts/build-blog.mjs
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
