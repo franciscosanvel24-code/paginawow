@@ -616,6 +616,36 @@ footer{grid-template-columns:1.25fr .7fr 1.25fr .8fr auto}
 .problem .glass-dark:before{display:none}
 .problem .symptom-cards p{color:var(--muted-light)}
 
+/* Menú adaptable: se invierte sobre las secciones de color. */
+.nav{
+  transition:background-color .35s ease,border-color .35s ease,box-shadow .35s ease;
+}
+.brand-plate{
+  position:relative;
+  width:clamp(118px,10vw,150px);
+  aspect-ratio:2/1;
+}
+.brand-plate .brand-logo{
+  position:absolute;
+  inset:50% auto auto 50%;
+  width:100%;
+  height:auto;
+  translate:-50% -50%;
+  transition:opacity .25s ease;
+}
+.brand-logo-color{opacity:0}
+.nav.nav-inverted{
+  background:rgba(255,255,255,.94);
+  border-bottom-color:rgba(8,13,84,.12);
+  box-shadow:0 10px 30px rgba(8,13,84,.1);
+}
+.nav.nav-inverted .brand-logo-white{opacity:0}
+.nav.nav-inverted .brand-logo-color{opacity:1}
+.nav.nav-inverted nav{color:var(--navy)}
+.nav.nav-inverted nav a:hover{border-color:var(--blue)}
+.nav.nav-inverted .button-small{box-shadow:0 4px 0 var(--blue)}
+.nav.nav-inverted .button-small:hover{box-shadow:0 2px 0 var(--blue)}
+
 /* ---------- Método WOW: una ruta clara de tres pasos ---------- */
 .method{display:block;background:var(--yellow)}
 .method-intro{max-width:920px;margin:0 auto clamp(42px,5vw,68px);text-align:center}
@@ -707,6 +737,7 @@ footer{grid-template-columns:1.25fr .7fr 1.25fr .8fr auto}
   }
 }
 @media(max-width:560px){
+  .brand-plate{width:104px}
   .method-intro{text-align:left}
   .method-intro .eyebrow{justify-content:flex-start}
   .method-summary{margin-left:0}
