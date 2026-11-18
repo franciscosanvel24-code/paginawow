@@ -8,27 +8,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.14 });
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-/* El menú adopta el tono opuesto a la sección que pasa por debajo. */
-const siteNav = document.querySelector('.nav');
-const navSections = [...document.querySelectorAll('main section, footer')];
-let navFrame = 0;
-const updateNavTone = () => {
-  navFrame = 0;
-  const probeY = (siteNav?.offsetHeight || 84) + 2;
-  const activeSection = navSections.find((section) => {
-    const rect = section.getBoundingClientRect();
-    return rect.top <= probeY && rect.bottom > probeY;
-  });
-  siteNav?.classList.toggle('nav-inverted', activeSection?.dataset.navTone === 'color');
-};
-const requestNavTone = () => {
-  if (navFrame) return;
-  navFrame = requestAnimationFrame(updateNavTone);
-};
-updateNavTone();
-window.addEventListener('scroll', requestNavTone, { passive: true });
-window.addEventListener('resize', requestNavTone);
-
 /* Formulario */
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
@@ -198,19 +177,4 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
   const url = link.dataset.url.trim();
   if (url) { link.href = url; link.classList.remove('social-pending'); }
   else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
-});
-
-/* Redes de WOW: quedan listas para activarse al pegar las URLs reales en data-url. */
-document.querySelectorAll('.footer-social[data-url]').forEach((link) => {
-  const url = link.dataset.url.trim();
-  if (url) {
-    link.href = url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.classList.remove('is-pending');
-    link.removeAttribute('aria-disabled');
-    link.removeAttribute('title');
-  } else {
-    link.addEventListener('click', (event) => event.preventDefault());
-  }
 });
