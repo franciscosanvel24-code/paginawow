@@ -495,8 +495,19 @@ main{position:relative}
 .problem .glass-dark:before{display:none}
 .problem .symptom-cards p{color:var(--muted-light)}
 
-.nav{transition:background-color .35s ease,border-color .35s ease,box-shadow .35s ease}
-.brand-plate{position:relative;width:clamp(118px,10vw,150px);aspect-ratio:2/1}
+.nav{
+  background:rgba(8,13,84,.96);
+  transition:background-color .35s ease,border-color .35s ease,box-shadow .35s ease;
+}
+.brand-plate{
+  position:relative;
+  width:clamp(118px,10vw,150px);
+  aspect-ratio:2/1;
+  padding:0;
+  border-radius:0;
+  background:transparent;
+  overflow:visible;
+}
 .brand-plate .brand-logo{
   position:absolute;
   inset:50% auto auto 50%;
