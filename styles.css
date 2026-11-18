@@ -474,3 +474,57 @@ main{position:relative}
 @media(max-width:560px){.eyebrow-pill{padding:9px 20px 9px 10px;font-size:18px}.eyebrow-pill .eyebrow-iso{width:32px;height:32px}}
 
 .founder-santoyo .founder-photo img{object-position:50% 40%}
+
+/* ---------- Kit de marca oficial WOW ---------- */
+.brand-plate{
+  background:transparent;
+  border-radius:0;
+  padding:0;
+  overflow:visible;
+}
+.brand-plate img{
+  width:clamp(118px,10vw,150px);
+  height:auto;
+  object-fit:contain;
+}
+
+.hero-stage{
+  min-height:520px;
+  display:grid;
+  place-items:center;
+}
+.hero-official-isotipo{
+  display:block;
+  width:min(34vw,500px);
+  height:auto;
+  max-width:none;
+  object-fit:contain;
+  filter:drop-shadow(0 28px 38px rgba(0,0,0,.2));
+  animation:officialIsoFloat 5s ease-in-out infinite;
+}
+@keyframes officialIsoFloat{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-14px) rotate(1deg)}
+}
+
+.wow-title-logo{height:.92em;width:auto;max-width:min(58vw,520px);object-fit:contain}
+.team-title img{height:1em;width:auto;max-width:min(62vw,520px);object-fit:contain}
+.footer-logo img{width:clamp(185px,18vw,255px);height:auto;object-fit:contain}
+.marca-agua,.bounce-iso,.eyebrow-iso,.svc-icon img,.badge-iso{object-fit:contain}
+
+@media(max-width:1120px){
+  .hero-official-isotipo{width:min(52vw,420px)}
+}
+@media(max-width:900px){
+  .hero-stage{min-height:390px;margin:54px 0 44px}
+  .hero-official-isotipo{width:min(56vw,360px)}
+}
+@media(max-width:560px){
+  .brand-plate{padding:0;border-radius:0}
+  .brand-plate img{width:104px}
+  .hero-stage{min-height:270px;margin:42px 0 34px}
+  .hero-official-isotipo{width:min(64vw,250px);filter:drop-shadow(0 20px 28px rgba(0,0,0,.18))}
+  .wow-title-logo{height:.78em;max-width:72vw}
+  .team-title img{height:.9em;max-width:76vw}
+  .footer-logo img{width:200px}
+}
