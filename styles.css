@@ -569,3 +569,21 @@ footer .copy,footer .copyright{grid-column:1/-1;border-top:1px solid rgba(255,25
   .logo-backdrop{width:min(70vw,420px)}
 }
 @media(max-width:560px){.hero{padding-top:calc(72px + 36px)}.hero-stage{margin:50px 0 60px}}
+
+/* Tamaños que también se ajustan a la altura de la pantalla, para que cada apartado quepa centrado */
+@media(min-width:901px){
+  .statement{font-size:clamp(34px,min(5.2vw,8.4vh),76px);margin-bottom:clamp(28px,6vh,90px)}
+  .section-head h2{font-size:clamp(38px,min(5.8vw,9vh),86px)}
+  .wow-title-largo{font-size:clamp(38px,min(6vw,9.4vh),92px);margin-bottom:clamp(20px,4.5vh,46px)}
+  .team-title{font-size:clamp(34px,min(5.2vw,8vh),78px)}
+  .team-heading{margin-bottom:clamp(24px,5vh,84px)}
+  .bounce-copy h2{font-size:clamp(34px,min(4.6vw,7.4vh),70px)}
+  .symptom-cards article{min-height:0;padding:clamp(22px,3.4vh,32px)}
+  .symptom-cards h3{margin-top:clamp(14px,3vh,30px)}
+  .service-grid,.article-grid{margin-top:clamp(28px,5vh,60px)}
+  .founder-frame{aspect-ratio:auto;height:clamp(200px,38vh,500px)}
+  .founder-inner{padding-bottom:18px}
+  .founder-info{padding-top:14px}
+  .founder-info:before{margin-bottom:10px}
+  .bounce-box{min-height:min(560px,70vh)}
+}

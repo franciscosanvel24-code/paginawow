@@ -206,75 +206,91 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
   else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
 });
 
-/* ---------- Avance por secciones (estilo "un giro de rueda = siguiente apartado") ----------
-   Solo en escritorio con mouse/trackpad. Si una sección es más alta que la pantalla,
-   primero se recorre normal y al llegar a su final salta a la siguiente. */
+/* ---------- Avance por secciones (un giro de rueda = siguiente apartado) ----------
+   Cada apartado se centra en el espacio visible bajo el menú, según el tamaño de la pantalla.
+   Si un apartado no cabe, se alinea arriba, se recorre normal y al terminar salta al siguiente. */
 (() => {
   const desktop = window.matchMedia('(pointer: fine) and (min-width: 901px)');
   if (reduceMotion) return;
-  const getTargets = () => [...document.querySelectorAll('main > section, main > .zona-luces > section, footer')]
-    .map((el) => ({ el, top: Math.round(el.getBoundingClientRect().top + window.scrollY) }))
-    .sort((a, b) => a.top - b.top);
-  let targets = getTargets();
-  window.addEventListener('resize', () => { targets = getTargets(); });
-  window.addEventListener('load', () => { targets = getTargets(); });
+  const sections = [...document.querySelectorAll('main > section, main > .zona-luces > section, footer')];
+  const navH = () => (document.querySelector('.nav')?.offsetHeight || 0);
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const clamp = (v) => Math.max(0, Math.min(maxScroll(), Math.round(v)));
+  /* Límites reales del contenido visible de cada apartado (sin luces ni marcas de agua) */
+  const contentBox = (sec) => {
+    const kids = [...sec.children].filter((el) => !el.matches('.blob, .luz, .marca-agua, [hidden], .ticker') && el.offsetHeight > 0);
+    if (!kids.length) { const r = sec.getBoundingClientRect(); return { top: r.top, bottom: r.bottom }; }
+    let top = Infinity, bottom = -Infinity;
+    kids.forEach((k) => { const r = k.getBoundingClientRect(); top = Math.min(top, r.top); bottom = Math.max(bottom, r.bottom); });
+    return { top, bottom };
+  };
+  let stops = [];
+  const measure = () => {
+    const vh = window.innerHeight, nh = navH(), area = vh - nh, gap = 28;
+    stops = sections.map((sec, i) => {
+      if (i === 0) return { sec, start: 0, end: 0 };
+      const b = contentBox(sec), top = b.top + window.scrollY, bottom = b.bottom + window.scrollY, h = bottom - top;
+      if (h <= area - 8) {
+        const y = clamp(top - nh - (area - h) / 2);          // centrado en el espacio bajo el menú
+        return { sec, start: y, end: y };
+      }
+      const start = clamp(top - nh - gap), end = clamp(bottom + gap - vh);   // no cabe: arriba y luego recorrido
+      return { sec, start, end: Math.max(start, end) };
+    });
+  };
+  measure();
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  new ResizeObserver(() => measure()).observe(document.body);
 
   /* Indicador de puntos a la derecha */
   const dots = document.createElement('nav');
   dots.className = 'snap-dots';
   dots.setAttribute('aria-label', 'Apartados de la página');
-  targets.forEach((t, i) => {
+  sections.forEach((sec, i) => {
     const b = document.createElement('button');
     b.type = 'button';
-    const label = t.el.querySelector('h1, h2')?.textContent.trim().slice(0, 40) || (t.el.tagName === 'FOOTER' ? 'Pie de página' : `Apartado ${i + 1}`);
+    const label = sec.querySelector('h1, h2')?.textContent.trim().slice(0, 40) || (sec.tagName === 'FOOTER' ? 'Pie de página' : `Apartado ${i + 1}`);
     b.setAttribute('aria-label', label);
     b.title = label;
-    b.addEventListener('click', () => go(i));
+    b.addEventListener('click', () => goTo(stops[i].start));
     dots.appendChild(b);
   });
   document.body.appendChild(dots);
 
   let locked = false, acc = 0, accTimer;
-  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
-  const currentIndex = () => {
-    const y = window.scrollY + 4;
-    let idx = 0;
-    targets.forEach((t, i) => { if (t.top <= y) idx = i; });
-    return idx;
-  };
-  const go = (i) => {
-    i = Math.max(0, Math.min(targets.length - 1, i));
+  const goTo = (y) => {
     locked = true;
-    window.scrollTo({ top: Math.min(targets[i].top, maxScroll()), behavior: 'smooth' });
+    window.scrollTo({ top: clamp(y), behavior: 'smooth' });
     window.setTimeout(() => { locked = false; acc = 0; }, 850);
   };
-  const updateDots = () => {
-    const idx = currentIndex();
-    [...dots.children].forEach((d, i) => d.classList.toggle('activo', i === idx));
+  const activeIndex = () => {
+    const y = window.scrollY;
+    let best = 0, dist = Infinity;
+    stops.forEach((s, i) => {
+      const d = y < s.start ? s.start - y : (y > s.end ? y - s.end : 0);
+      if (d < dist) { dist = d; best = i; }
+    });
+    return best;
   };
+  const updateDots = () => { const a = activeIndex(); [...dots.children].forEach((d, i) => d.classList.toggle('activo', i === a)); };
   window.addEventListener('scroll', updateDots, { passive: true });
   updateDots();
 
-  /* Decide si el gesto se resuelve con scroll normal (dentro de una sección alta) o con salto */
-  const handle = (dir, event) => {
-    const i = currentIndex();
-    const y = window.scrollY, vh = window.innerHeight;
-    const sectionEnd = (targets[i + 1]?.top ?? maxScroll() + vh);
+  /* true = el gesto lo resuelve el scroll normal (estás dentro de un apartado alto) */
+  const insideTall = (dir) => {
+    const y = window.scrollY, tol = window.innerHeight * 0.15;
+    return stops.some((s) => s.end > s.start && (dir > 0 ? (y >= s.start - 4 && y < s.end - tol) : (y > s.start + tol && y <= s.end + 4)));
+  };
+  const step = (dir) => {
+    const y = window.scrollY;
     if (dir > 0) {
-      if (y + vh < sectionEnd - vh * 0.35) return false;    // aún hay bastante contenido de esta sección abajo
-      if (i >= targets.length - 1 || y >= maxScroll() - 2) return false;
-      event.preventDefault(); go(i + 1); return true;
+      const next = stops.flatMap((s) => [s.start, s.end]).filter((v) => v > y + 6).sort((a, b) => a - b)[0];
+      if (next !== undefined) goTo(next);
+    } else {
+      const prev = stops.flatMap((s) => [s.start, s.end]).filter((v) => v < y - 6).sort((a, b) => b - a)[0];
+      goTo(prev ?? 0);
     }
-    if (y > targets[i].top + vh * 0.35) {                    // aún hay bastante contenido de esta sección arriba
-      if (y - vh * 0.9 < targets[i].top) { event.preventDefault(); go(i); return true; }
-      return false;
-    }
-    if (i === 0) return false;
-    event.preventDefault();
-    const prev = targets[i - 1], prevH = targets[i].top - prev.top;
-    if (prevH > vh * 1.35) { locked = true; window.scrollTo({ top: targets[i].top - vh, behavior: 'smooth' }); window.setTimeout(() => { locked = false; acc = 0; }, 850); }
-    else go(i - 1);
-    return true;
   };
 
   window.addEventListener('wheel', (event) => {
@@ -282,27 +298,20 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
     if (event.target.closest('textarea, input, select')) return;
     if (locked) { event.preventDefault(); return; }
     const dir = Math.sign(event.deltaY);
-    if (!dir) return;
-    /* Si la sección continúa, scroll normal */
-    const i = currentIndex(), y = window.scrollY, vh = window.innerHeight;
-    const sectionEnd = (targets[i + 1]?.top ?? maxScroll() + vh);
-    const tol = vh * 0.35;
-    const inside = dir > 0 ? (y + vh < sectionEnd - tol) : (y > targets[i].top + tol && y - vh * 0.9 >= targets[i].top);
-    if (inside) return;
+    if (!dir || insideTall(dir)) return;
     event.preventDefault();
-    /* Junta movimientos pequeños del trackpad antes de saltar */
-    acc += event.deltaY;
+    acc += event.deltaY;                                     /* junta los movimientos cortos del trackpad */
     clearTimeout(accTimer);
     accTimer = setTimeout(() => { acc = 0; }, 180);
     if (Math.abs(acc) < 40) return;
     acc = 0;
-    handle(dir, event);
+    step(dir);
   }, { passive: false });
 
   window.addEventListener('keydown', (event) => {
     if (!desktop.matches || locked || event.target.closest('input, textarea, select, button, [contenteditable]')) return;
     const down = ['PageDown', 'ArrowDown', ' '].includes(event.key) && !event.shiftKey;
     const up = ['PageUp', 'ArrowUp'].includes(event.key) || (event.key === ' ' && event.shiftKey);
-    if (down) handle(1, event); else if (up) handle(-1, event);
+    if ((down || up) && !insideTall(down ? 1 : -1)) { event.preventDefault(); step(down ? 1 : -1); }
   });
 })();
