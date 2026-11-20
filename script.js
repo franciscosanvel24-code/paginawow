@@ -1,42 +1,21 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* Apariciones discretas */
-if (reduceMotion || !('IntersectionObserver' in window)) {
-  document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
-} else {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
-}
-
-/* Header sticky: adapta contraste a la sección visible */
-const header = document.querySelector('[data-header]');
-const toneSections = [...document.querySelectorAll('[data-nav-tone]')];
-const setHeaderTone = (tone) => {
-  header.classList.toggle('nav-on-dark', tone === 'dark');
-  header.classList.toggle('nav-on-light', tone !== 'dark');
-};
-if ('IntersectionObserver' in window) {
-  const toneObserver = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting)
-      .sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
-    if (visible[0]) setHeaderTone(visible[0].target.dataset.navTone);
-  }, { rootMargin: '-18% 0px -70% 0px', threshold: 0 });
-  toneSections.forEach((section) => toneObserver.observe(section));
-}
+/* Entrada de elementos al hacer scroll */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.14 });
+document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
 /* Menú móvil accesible */
+const header = document.querySelector('[data-header]') || document.querySelector('.nav');
 const menuToggle = document.querySelector('.menu-toggle');
 const closeMenu = () => {
-  header.classList.remove('menu-active');
+  header?.classList.remove('menu-active');
   document.body.classList.remove('menu-open');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-label', 'Abrir menú');
+  menuToggle?.setAttribute('aria-expanded', 'false');
+  menuToggle?.setAttribute('aria-label', 'Abrir menú');
 };
 menuToggle?.addEventListener('click', () => {
   const open = !header.classList.contains('menu-active');
@@ -46,9 +25,9 @@ menuToggle?.addEventListener('click', () => {
   menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
 });
 header?.querySelectorAll('a[href*="#"]').forEach((link) => link.addEventListener('click', closeMenu));
-window.addEventListener('resize', () => { if (window.innerWidth > 1100) closeMenu(); });
+window.addEventListener('resize', () => { if (window.innerWidth > 1120) closeMenu(); });
 
-/* Formulario preparado: valida, evita duplicados y no simula un envío sin destino */
+/* Formulario preparado: valida, filtra spam y no simula un envío sin destino */
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
 let validating = false;
@@ -67,26 +46,162 @@ form?.addEventListener('submit', (event) => {
   window.setTimeout(() => { validating = false; }, 1800);
 });
 
-/* Profundidad ligera en las tarjetas del equipo */
-if (!reduceMotion) {
-  document.querySelectorAll('[data-tilt]').forEach((card) => {
-    const inner = card.querySelector('.founder-inner');
-    const reset = () => {
-      card.classList.remove('is-active');
-      card.style.setProperty('--rx', '0deg');
-      card.style.setProperty('--ry', '0deg');
-    };
-    card.addEventListener('pointermove', (event) => {
-      const rect = inner.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width;
-      const y = (event.clientY - rect.top) / rect.height;
-      card.classList.add('is-active');
-      card.style.setProperty('--ry', `${(x - .5) * 12}deg`);
-      card.style.setProperty('--rx', `${(.5 - y) * 10}deg`);
-      card.style.setProperty('--gx', `${x * 100}%`);
-      card.style.setProperty('--gy', `${y * 100}%`);
-    });
-    card.addEventListener('pointerleave', reset);
-    card.addEventListener('pointercancel', reset);
+/* Motor de rebote: mueve elementos dentro de su contenedor y los hace rebotar en sus paredes.
+   overflow = cuánto puede salirse cada elemento del borde (0 = rebota justo en la pared). */
+function makeBouncer(container, items, { overflow = 0, padY = null, speed = 1, onBounce } = {}) {
+  const state = items.map((el, n) => {
+    const angle = (n * 2.39996) + 0.6;          // direcciones distintas para cada elemento
+    const v = (0.9 + (n % 3) * 0.35) * speed;
+    return { el, x: el.offsetLeft, y: el.offsetTop, vx: Math.cos(angle) * v, vy: Math.sin(angle) * v, rot: -12 };
   });
+  state.forEach((s) => { s.el.style.left = '0'; s.el.style.top = '0'; s.el.style.right = 'auto'; s.el.style.bottom = 'auto'; });
+  let running = false, last = 0;
+  const step = (t) => {
+    if (!running) return;
+    const dt = last ? Math.min((t - last) / 16.67, 3) : 1;
+    last = t;
+    const W = container.clientWidth, H = container.clientHeight;
+    state.forEach((s) => {
+      const w = s.el.offsetWidth, h = s.el.offsetHeight;
+      const minX = -w * overflow, maxX = W - w * (1 - overflow);
+      /* padY: margen vertical para que una luz nunca toque el borde superior o inferior (evita líneas de corte) */
+      const minY = padY === null ? -h * overflow : padY;
+      const maxY = padY === null ? H - h * (1 - overflow) : Math.max(padY, H - h - padY);
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      let hit = false;
+      if (s.x <= minX || s.x >= maxX) { s.vx *= -1; s.x = Math.max(minX, Math.min(s.x, maxX)); hit = true; }
+      if (s.y <= minY || s.y >= maxY) { s.vy *= -1; s.y = Math.max(minY, Math.min(s.y, maxY)); hit = true; }
+      if (hit && onBounce) onBounce(s);
+      if (onBounce) { s.rot += 0.15 * dt; s.el.style.transform = `translate(${s.x}px, ${s.y}px) rotate(${s.rot}deg)`; }
+      else s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+    });
+    requestAnimationFrame(step);
+  };
+  /* Solo se anima mientras el contenedor está en pantalla */
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !running) { running = true; last = 0; requestAnimationFrame(step); }
+    else if (!entry.isIntersecting) running = false;
+  }).observe(container);
 }
+
+if (!reduceMotion) {
+  /* Luces del fondo: rebotan entre las paredes de cada sección */
+  /* Luces del fondo: se mueven a una capa común sobre los fondos de las secciones y
+     rebotan dentro de su sección y la mitad de las vecinas, así cruzan cada salto de página. */
+  const main = document.querySelector('main');
+  if (main) {
+  const layer = document.createElement('div');
+  layer.className = 'capa-luces';
+  layer.setAttribute('aria-hidden', 'true');
+  main.prepend(layer);
+  const lights = [...main.querySelectorAll('.blob, .luz')].filter((el) => !el.closest('.capa-luces'));
+  const state = lights.map((el, n) => {
+    const origin = el.closest('.zona-luces') || el.closest('section');
+    const r = el.getBoundingClientRect(), m = main.getBoundingClientRect();
+    const angle = n * 2.39996 + 0.6, v = 0.9 + (n % 3) * 0.35;
+    layer.appendChild(el);
+    return { el, origin, x: r.left - m.left, y: r.top - m.top, vx: Math.cos(angle) * v, vy: Math.sin(angle) * v };
+  });
+  let bounds = [];
+  const measure = () => {
+    const mTop = main.getBoundingClientRect().top;
+    bounds = state.map((s) => {
+      const o = s.origin.getBoundingClientRect();
+      const prev = s.origin.previousElementSibling, next = s.origin.nextElementSibling;
+      const reachUp = prev && prev.getBoundingClientRect ? Math.min(prev.getBoundingClientRect().height * 0.5, 420) : 0;
+      const reachDown = next && next.getBoundingClientRect ? Math.min(next.getBoundingClientRect().height * 0.5, 420) : 0;
+      return { top: o.top - mTop - reachUp, bottom: o.bottom - mTop + reachDown };
+    });
+  };
+  measure();
+  /* posición inicial de cada luz (antes de animarse) para que ninguna se quede arriba a la izquierda */
+  state.forEach((s) => { s.el.style.transform = `translate(${s.x}px, ${s.y}px)`; });
+  window.addEventListener('resize', measure);
+  let last = 0;
+  const tick = (t) => {
+    const dt = last ? Math.min((t - last) / 16.67, 3) : 1;
+    last = t;
+    const W = main.clientWidth, H = main.clientHeight;
+    const viewTop = window.scrollY - main.offsetTop - 600, viewBottom = viewTop + window.innerHeight + 1200;
+    state.forEach((s, i) => {
+      const b = bounds[i];
+      if (b.bottom < viewTop || b.top > viewBottom) return;   // fuera de pantalla: no se calcula
+      const w = s.el.offsetWidth, h = s.el.offsetHeight;
+      const minX = -w * 0.45, maxX = W - w * 0.55;
+      const minY = Math.max(-h * 0.3, b.top), maxY = Math.min(H - h * 0.7, b.bottom - h);
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      if (s.x <= minX || s.x >= maxX) { s.vx *= -1; s.x = Math.max(minX, Math.min(s.x, maxX)); }
+      if (s.y <= minY || s.y >= maxY) { s.vy *= -1; s.y = Math.max(minY, Math.min(s.y, maxY)); }
+      s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  }
+
+  /* Caras WOW en el recuadro de contacto: rebotan y cambian de color en cada choque */
+  const box = document.getElementById('bounceBox');
+  if (box) {
+    const colors = ['assets/wow-isotipo.svg', 'assets/wow-isotipo-amarillo.svg', 'assets/wow-isotipo-blanco.svg'];
+    colors.forEach((src) => { const pre = new Image(); pre.src = src; });
+    const faces = [...box.querySelectorAll('.bounce-iso')];
+    faces.forEach((f, n) => { f.style.left = `${10 + n * 17}%`; f.style.top = `${8 + (n * 23) % 70}%`; });
+    makeBouncer(box, faces, {
+      speed: 1.5,
+      onBounce: (s) => {
+        const next = (colors.indexOf(s.el.getAttribute('src')) + 1) % colors.length;
+        s.el.src = colors[next];
+      },
+    });
+  }
+} else {
+  document.querySelectorAll('.bounce-iso').forEach((f, n) => { f.style.transform = `translate(${24 + n * 60}px, ${24 + n * 40}px) rotate(-12deg)`; });
+}
+
+/* Tarjetas de Co-Founders: inclinación 3D y brillo que siguen al cursor */
+document.querySelectorAll('[data-tilt]').forEach((card) => {
+  const inner = card.querySelector('.founder-inner');
+  const reset = () => {
+    card.classList.remove('is-active');
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  };
+  if (reduceMotion) return;
+  card.addEventListener('pointermove', (e) => {
+    const r = inner.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    card.classList.add('is-active');
+    card.style.setProperty('--ry', `${(px - 0.5) * 18}deg`);
+    card.style.setProperty('--rx', `${(0.5 - py) * 14}deg`);
+    card.style.setProperty('--gx', `${px * 100}%`);
+    card.style.setProperty('--gy', `${py * 100}%`);
+  });
+  card.addEventListener('pointerleave', reset);
+  card.addEventListener('pointercancel', reset);
+});
+
+/* Co-Founders: cuando data-url tenga la página de trabajo, la tarjeta se vuelve enlace */
+document.querySelectorAll('.founder[data-url]').forEach((card) => {
+  const url = card.dataset.url.trim();
+  if (!url) return;
+  const cta = card.querySelector('.founder-cta');
+  const name = card.querySelector('h3').textContent;
+  const link = document.createElement('a');
+  link.className = 'founder-cta';
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = 'Ver su trabajo ↗';
+  link.setAttribute('aria-label', `Ver el trabajo de ${name} (se abre en otra pestaña)`);
+  cta.replaceWith(link);
+  card.classList.add('has-url');
+  card.addEventListener('click', (e) => { if (!e.target.closest('a')) window.open(url, '_blank', 'noopener'); });
+});
+
+/* Redes de clientes: un botón con data-url vacío se muestra como pendiente; con URL se activa */
+document.querySelectorAll('.social-link[data-url]').forEach((link) => {
+  const url = link.dataset.url.trim();
+  if (url) { link.href = url; link.classList.remove('social-pending'); }
+  else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
+});
