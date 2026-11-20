@@ -709,6 +709,3 @@ footer{min-height:100svh;align-content:center;padding-top:calc(84px + clamp(24px
 .bounce-copy>.eyebrow{margin:0;padding:clamp(28px,5vh,56px) 0}   /* mismo espacio arriba (borde) y abajo (título) */
 /* Co-Founders: isotipo de marca de agua que cubre casi todo el fondo de la escena */
 .team-mark-centro{width:min(96vw,150vh,1500px);opacity:.22}
-
-/* WOW amarillo sobre blanco: contorno sombra azul marino para que se lea */
-.wow-inline-amarillo{filter:drop-shadow(0 .04em 0 var(--navy)) drop-shadow(0 0 1px var(--navy))}
