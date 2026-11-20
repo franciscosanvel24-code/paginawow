@@ -766,3 +766,6 @@ main,footer{overflow-x:clip}
 }
 @media(max-width:600px){.logo-backdrop{width:48vw}.anillo-texto{inset:-11vw;width:calc(100% + 22vw)}}
 @media (max-width:1180px),(pointer:coarse){.capa-luces{opacity:.5}.capa-luces>.blob,.capa-luces>.luz{width:min(80vw,420px)!important;height:min(80vw,420px)!important}}
+/* Co-Founders: el encabezado (subtítulo y título) por delante de la marca de agua */
+.team-heading{position:relative;z-index:5!important}
+.team .founders{z-index:1!important}
