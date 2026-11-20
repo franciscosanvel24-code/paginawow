@@ -651,3 +651,5 @@ footer .copy{color:#C9D0FF}
   .symptom-cards p{font-size:clamp(16px,min(1.2vw,2.2vh),18px)}
   .article-grid h3{font-size:clamp(22px,min(2vw,3.4vh),31px)}
 }
+/* La cuadrícula de la portada se desvanece antes de terminar, para que no asome en la escena siguiente */
+.hero:before{-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 60%,transparent 100%)}
