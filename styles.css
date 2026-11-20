@@ -613,3 +613,10 @@ main>section,main>.zona-luces>section,footer,.hero,.problem,.brand-moment,.servi
 .services .section-head h2 span{display:inline-block;margin-top:.12em;background:var(--navy);color:var(--yellow);padding:.04em .16em .1em;border-radius:6px;line-height:1.02}
 .services .service-card{background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,255,255,.66))}
 .services .eyebrow-pill.tono-blue{box-shadow:inset 0 0 0 2px var(--navy),0 4px 0 var(--navy)}
+
+/* Cierre: textos claros y legibles sobre azul marino */
+footer{color:var(--white)}
+footer nav a,footer .footer-column span{color:#E6EAFF}
+footer nav a:hover{color:var(--yellow)}
+footer h2{color:var(--cyan)}
+footer .copy{color:#C9D0FF}

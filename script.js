@@ -327,6 +327,8 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
     const mid = window.innerHeight * 0.5;
     let best = scenes[0];
     scenes.forEach((s) => { const r = s.getBoundingClientRect(); if (r.top <= mid) best = s; });
+    /* al final de la página la última escena (Cierre) no llega al centro: se activa al tocar fondo */
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) best = scenes[scenes.length - 1];
     set(best.dataset.color);
   };
   window.addEventListener('scroll', pick, { passive: true });
