@@ -707,3 +707,5 @@ footer{min-height:100svh;align-content:center;padding-top:calc(84px + clamp(24px
 /* Recuadro de contacto: el subtítulo queda centrado entre el borde superior y el texto */
 .bounce-box{align-items:flex-start;padding-top:0}
 .bounce-copy>.eyebrow{margin:0;padding:clamp(28px,5vh,56px) 0}   /* mismo espacio arriba (borde) y abajo (título) */
+/* Co-Founders: isotipo de marca de agua que cubre casi todo el fondo de la escena */
+.team-mark-centro{width:min(96vw,150vh,1500px);opacity:.22}
