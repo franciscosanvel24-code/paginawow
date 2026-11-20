@@ -205,3 +205,104 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
   if (url) { link.href = url; link.classList.remove('social-pending'); }
   else { link.setAttribute('aria-disabled', 'true'); link.title = 'Enlace próximamente'; }
 });
+
+/* ---------- Avance por secciones (estilo "un giro de rueda = siguiente apartado") ----------
+   Solo en escritorio con mouse/trackpad. Si una sección es más alta que la pantalla,
+   primero se recorre normal y al llegar a su final salta a la siguiente. */
+(() => {
+  const desktop = window.matchMedia('(pointer: fine) and (min-width: 901px)');
+  if (reduceMotion) return;
+  const getTargets = () => [...document.querySelectorAll('main > section, main > .zona-luces > section, footer')]
+    .map((el) => ({ el, top: Math.round(el.getBoundingClientRect().top + window.scrollY) }))
+    .sort((a, b) => a.top - b.top);
+  let targets = getTargets();
+  window.addEventListener('resize', () => { targets = getTargets(); });
+  window.addEventListener('load', () => { targets = getTargets(); });
+
+  /* Indicador de puntos a la derecha */
+  const dots = document.createElement('nav');
+  dots.className = 'snap-dots';
+  dots.setAttribute('aria-label', 'Apartados de la página');
+  targets.forEach((t, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    const label = t.el.querySelector('h1, h2')?.textContent.trim().slice(0, 40) || (t.el.tagName === 'FOOTER' ? 'Pie de página' : `Apartado ${i + 1}`);
+    b.setAttribute('aria-label', label);
+    b.title = label;
+    b.addEventListener('click', () => go(i));
+    dots.appendChild(b);
+  });
+  document.body.appendChild(dots);
+
+  let locked = false, acc = 0, accTimer;
+  const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+  const currentIndex = () => {
+    const y = window.scrollY + 4;
+    let idx = 0;
+    targets.forEach((t, i) => { if (t.top <= y) idx = i; });
+    return idx;
+  };
+  const go = (i) => {
+    i = Math.max(0, Math.min(targets.length - 1, i));
+    locked = true;
+    window.scrollTo({ top: Math.min(targets[i].top, maxScroll()), behavior: 'smooth' });
+    window.setTimeout(() => { locked = false; acc = 0; }, 850);
+  };
+  const updateDots = () => {
+    const idx = currentIndex();
+    [...dots.children].forEach((d, i) => d.classList.toggle('activo', i === idx));
+  };
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+
+  /* Decide si el gesto se resuelve con scroll normal (dentro de una sección alta) o con salto */
+  const handle = (dir, event) => {
+    const i = currentIndex();
+    const y = window.scrollY, vh = window.innerHeight;
+    const sectionEnd = (targets[i + 1]?.top ?? maxScroll() + vh);
+    if (dir > 0) {
+      if (y + vh < sectionEnd - vh * 0.35) return false;    // aún hay bastante contenido de esta sección abajo
+      if (i >= targets.length - 1 || y >= maxScroll() - 2) return false;
+      event.preventDefault(); go(i + 1); return true;
+    }
+    if (y > targets[i].top + vh * 0.35) {                    // aún hay bastante contenido de esta sección arriba
+      if (y - vh * 0.9 < targets[i].top) { event.preventDefault(); go(i); return true; }
+      return false;
+    }
+    if (i === 0) return false;
+    event.preventDefault();
+    const prev = targets[i - 1], prevH = targets[i].top - prev.top;
+    if (prevH > vh * 1.35) { locked = true; window.scrollTo({ top: targets[i].top - vh, behavior: 'smooth' }); window.setTimeout(() => { locked = false; acc = 0; }, 850); }
+    else go(i - 1);
+    return true;
+  };
+
+  window.addEventListener('wheel', (event) => {
+    if (!desktop.matches || event.ctrlKey || document.body.classList.contains('menu-open')) return;
+    if (event.target.closest('textarea, input, select')) return;
+    if (locked) { event.preventDefault(); return; }
+    const dir = Math.sign(event.deltaY);
+    if (!dir) return;
+    /* Si la sección continúa, scroll normal */
+    const i = currentIndex(), y = window.scrollY, vh = window.innerHeight;
+    const sectionEnd = (targets[i + 1]?.top ?? maxScroll() + vh);
+    const tol = vh * 0.35;
+    const inside = dir > 0 ? (y + vh < sectionEnd - tol) : (y > targets[i].top + tol && y - vh * 0.9 >= targets[i].top);
+    if (inside) return;
+    event.preventDefault();
+    /* Junta movimientos pequeños del trackpad antes de saltar */
+    acc += event.deltaY;
+    clearTimeout(accTimer);
+    accTimer = setTimeout(() => { acc = 0; }, 180);
+    if (Math.abs(acc) < 40) return;
+    acc = 0;
+    handle(dir, event);
+  }, { passive: false });
+
+  window.addEventListener('keydown', (event) => {
+    if (!desktop.matches || locked || event.target.closest('input, textarea, select, button, [contenteditable]')) return;
+    const down = ['PageDown', 'ArrowDown', ' '].includes(event.key) && !event.shiftKey;
+    const up = ['PageUp', 'ArrowUp'].includes(event.key) || (event.key === ' ' && event.shiftKey);
+    if (down) handle(1, event); else if (up) handle(-1, event);
+  });
+})();
