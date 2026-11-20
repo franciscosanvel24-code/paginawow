@@ -551,3 +551,21 @@ footer .copy,footer .copyright{grid-column:1/-1;border-top:1px solid rgba(255,25
 .snap-dots button:hover{transform:scale(1.3)}
 .snap-dots button.activo{background:var(--yellow);border-color:var(--yellow);transform:scale(1.35)}
 @media (max-width:900px),(pointer:coarse){.snap-dots{display:none}}
+
+/* Portada como "pantalla completa": todo cabe entre el menú y la cinta, centrado y con aire */
+.hero{height:100svh;min-height:600px;padding:calc(84px + clamp(28px,5vh,56px)) clamp(22px,7vw,110px) calc(58px + clamp(28px,5vh,56px));align-content:center;align-items:center;gap:clamp(24px,4vw,64px)}
+.hero-title{font-size:clamp(40px,min(5.6vw,9.6vh),88px);line-height:.96}
+.hero-title span{margin-top:.08em}
+.hero .eyebrow{margin-bottom:clamp(12px,2.4vh,22px)}
+.hero-lead{margin-top:clamp(14px,2.8vh,30px);font-size:clamp(17px,min(1.8vw,2.7vh),24px)}
+.hero-actions{margin-top:clamp(18px,3.6vh,40px)}
+.hero-stage{min-height:0;margin:0;height:100%;display:grid;place-items:center}
+.logo-backdrop{width:min(34vw,52vh,480px)}
+.backdrop-ring{inset:calc(-1 * min(3.4vw,5.2vh,48px))}
+.sello-arco text{font-size:15px}
+@media(max-width:1120px){
+  .hero{height:auto;min-height:100svh;padding-top:calc(84px + 48px)}
+  .hero-stage{height:auto;margin:60px 0 70px}
+  .logo-backdrop{width:min(70vw,420px)}
+}
+@media(max-width:560px){.hero{padding-top:calc(72px + 36px)}.hero-stage{margin:50px 0 60px}}
