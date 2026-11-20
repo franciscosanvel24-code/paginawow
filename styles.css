@@ -709,3 +709,60 @@ footer{min-height:100svh;align-content:center;padding-top:calc(84px + clamp(24px
 .bounce-copy>.eyebrow{margin:0;padding:clamp(28px,5vh,56px) 0}   /* mismo espacio arriba (borde) y abajo (título) */
 /* Co-Founders: isotipo de marca de agua que cubre casi todo el fondo de la escena */
 .team-mark-centro{width:min(96vw,150vh,1500px);opacity:.22}
+
+/* ================= Celular y iPad ================= */
+body{overflow-x:clip}
+main,footer{overflow-x:clip}
+/* En pantallas táctiles y angostas cada escena lleva su propio color sólido:
+   así ningún título queda sobre el color de la escena vecina mientras se desliza con el dedo */
+@media (max-width:1180px),(pointer:coarse){
+  html,body{transition:none}
+  body,body[data-escena-color]{--escena:var(--navy)}
+  html body main [data-color="azul"],html body [data-color="azul"]{background:var(--navy)!important}
+  html body main [data-color="amarillo"],html body [data-color="amarillo"]{background:var(--yellow)!important}
+  html body main [data-color="blanco"],html body [data-color="blanco"]{background:var(--white)!important}
+  /* las escenas se recorren libres (sin altura mínima de pantalla completa) */
+  main>section:not(.hero),main>.zona-luces>section{min-height:0}
+}
+/* Portada: el anillo de frases cabe completo en el ancho de la pantalla */
+@media(max-width:1120px){
+  .hero-stage{margin:clamp(56px,9vw,80px) 0 clamp(64px,10vw,90px)}
+  .logo-backdrop{width:min(60vw,400px)}
+  .anillo-texto{inset:calc(-1 * min(11vw,52px));width:calc(100% + 2 * min(11vw,52px))}
+}
+/* iPad vertical (601–900 px) */
+@media(min-width:601px) and (max-width:900px){
+  .hero-title{font-size:clamp(52px,9vw,80px)}
+  .hero-lead{font-size:20px;max-width:560px}
+  .symptom-cards{grid-template-columns:1fr}
+  .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .article-grid{grid-template-columns:1fr}
+  .founders{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:20px}
+  .founder h3{font-size:24px}
+  .founder-frame{aspect-ratio:4/5;height:auto}
+  .diagnostic{grid-template-columns:1fr}
+  .cierre-hook{font-size:clamp(60px,12vw,110px)}
+}
+/* iPad horizontal y laptops táctiles (901–1180 px) */
+@media(min-width:901px) and (max-width:1180px){
+  .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .founder-frame{aspect-ratio:4/5;height:auto}
+}
+/* Celular */
+@media(max-width:600px){
+  .section{padding-top:72px;padding-bottom:72px}
+  .hero{padding-top:calc(72px + 28px);padding-bottom:40px}
+  .hero-actions{gap:14px}
+  .hero-actions .button{width:100%}
+  .eyebrow-pill{font-size:16px;padding:8px 16px 8px 9px}
+  .eyebrow-pill .eyebrow-iso{width:28px;height:28px}
+  .service-card{min-height:0}
+  .founder-frame{aspect-ratio:4/5;height:auto}
+  .team-badge{width:118px}
+  .client-next h3{font-size:30px}
+  .bounce-box{min-height:0;padding-bottom:40px}
+  .contact-form{padding:24px}
+  footer{gap:28px}
+}
+@media(max-width:600px){.logo-backdrop{width:48vw}.anillo-texto{inset:-11vw;width:calc(100% + 22vw)}}
+@media (max-width:1180px),(pointer:coarse){.capa-luces{opacity:.5}.capa-luces>.blob,.capa-luces>.luz{width:min(80vw,420px)!important;height:min(80vw,420px)!important}}

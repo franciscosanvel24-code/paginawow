@@ -108,8 +108,9 @@ if (!reduceMotion) {
     bounds = state.map((s) => {
       const o = s.origin.getBoundingClientRect();
       const prev = s.origin.previousElementSibling, next = s.origin.nextElementSibling;
-      const reachUp = prev && prev.getBoundingClientRect ? Math.min(prev.getBoundingClientRect().height * 0.5, 420) : 0;
-      const reachDown = next && next.getBoundingClientRect ? Math.min(next.getBoundingClientRect().height * 0.5, 420) : 0;
+      const compacto = window.matchMedia('(max-width: 1180px), (pointer: coarse)').matches;   /* celular/iPad: cada luz se queda en su escena */
+      const reachUp = !compacto && prev && prev.getBoundingClientRect ? Math.min(prev.getBoundingClientRect().height * 0.5, 420) : (compacto ? -Math.min(o.height * 0.15, 160) : 0);
+      const reachDown = !compacto && next && next.getBoundingClientRect ? Math.min(next.getBoundingClientRect().height * 0.5, 420) : (compacto ? -Math.min(o.height * 0.15, 160) : 0);
       return { top: o.top - mTop - reachUp, bottom: o.bottom - mTop + reachDown };
     });
   };
