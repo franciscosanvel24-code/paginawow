@@ -690,3 +690,6 @@ footer{min-height:100svh;align-content:center;padding-top:calc(84px + clamp(24px
 .statement .resalte{display:inline;color:var(--yellow)}
 .cierre-hook{white-space:nowrap}
 @media(max-width:900px){.cierre-hook{font-size:clamp(34px,11vw,64px)}}
+/* Todas las tarjetas de una misma fila con el mismo largo */
+.service-grid,.symptom-cards,.article-grid{align-items:stretch}
+.service-card,.symptom-cards article,.article-grid article{height:100%}
