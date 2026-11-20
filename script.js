@@ -98,7 +98,7 @@ if (!reduceMotion) {
   const state = lights.map((el, n) => {
     const origin = el.closest('.zona-luces') || el.closest('section');
     const r = el.getBoundingClientRect(), m = main.getBoundingClientRect();
-    const angle = n * 2.39996 + 0.6, v = 0.9 + (n % 3) * 0.35;
+    const angle = n * 2.39996 + 0.6, v = (0.9 + (n % 3) * 0.35) * 0.45;   /* velocidad de las luces (más lenta) */
     layer.appendChild(el);
     return { el, origin, x: r.left - m.left, y: r.top - m.top, vx: Math.cos(angle) * v, vy: Math.sin(angle) * v };
   });

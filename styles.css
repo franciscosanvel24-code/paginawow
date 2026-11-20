@@ -630,3 +630,9 @@ footer .copy{color:#C9D0FF}
 @media(max-width:560px){.anillo-texto{inset:-38px;width:calc(100% + 76px)}.anillo-texto text{font-size:32px}}
 .hero-lead{max-width:560px}
 .hero-stage{padding-left:clamp(0px,2vw,30px)}
+
+/* Luces del fondo más tenues */
+.capa-luces{opacity:.7}
+.flash{animation-duration:5s}
+.flash-2{animation-duration:6.4s}
+.flash-3{animation-duration:4.4s}
