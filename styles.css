@@ -693,3 +693,17 @@ footer{min-height:100svh;align-content:center;padding-top:calc(84px + clamp(24px
 /* Todas las tarjetas de una misma fila con el mismo largo */
 .service-grid,.symptom-cards,.article-grid{align-items:stretch}
 .service-card,.symptom-cards article,.article-grid article{height:100%}
+/* Contenido que crece con la pantalla para no dejar vacíos */
+@media(min-width:901px){
+  .section-lead,.wow-story>p:not(.eyebrow){font-size:clamp(18px,min(1.6vw,2.8vh),26px);max-width:820px}
+  .client-next{padding:clamp(36px,6vh,72px) clamp(36px,4vw,64px)}
+  .client-next h3{font-size:clamp(30px,min(3.4vw,5.6vh),58px)}
+  .client-next .client-desc{font-size:clamp(17px,min(1.4vw,2.6vh),22px)}
+  .founders{grid-template-columns:minmax(0,480px) auto minmax(0,480px)}
+  .contact-form label{font-size:clamp(15px,min(1.1vw,2vh),18px)}
+}
+/* Sin puntos de navegación lateral (el avance por escenas sigue activo) */
+.snap-dots{display:none!important}
+/* Recuadro de contacto: el subtítulo queda centrado entre el borde superior y el texto */
+.bounce-box{align-items:flex-start;padding-top:0}
+.bounce-copy>.eyebrow{margin:0;padding:clamp(28px,5vh,56px) 0}   /* mismo espacio arriba (borde) y abajo (título) */
