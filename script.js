@@ -316,3 +316,20 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
     if ((down || up) && !insideTall(down ? 1 : -1)) { event.preventDefault(); step(down ? 1 : -1); }
   });
 })();
+
+/* ---------- Cambio de escena: el fondo toma el color de la escena que cruza el centro de la pantalla ---------- */
+(() => {
+  const scenes = [...document.querySelectorAll('[data-color]')];
+  if (!scenes.length) return;
+  const set = (color) => { if (document.body.dataset.escenaColor !== color) document.body.dataset.escenaColor = color; };
+  set(scenes[0].dataset.color);
+  const pick = () => {
+    const mid = window.innerHeight * 0.5;
+    let best = scenes[0];
+    scenes.forEach((s) => { const r = s.getBoundingClientRect(); if (r.top <= mid) best = s; });
+    set(best.dataset.color);
+  };
+  window.addEventListener('scroll', pick, { passive: true });
+  window.addEventListener('resize', pick);
+  pick();
+})();

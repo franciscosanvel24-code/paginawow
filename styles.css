@@ -592,3 +592,24 @@ footer .copy,footer .copyright{grid-column:1/-1;border-top:1px solid rgba(255,25
 .snap-dots button{position:relative}
 .snap-dots button::after{content:attr(data-nombre);position:absolute;right:calc(100% + 16px);top:50%;translate:0 -50%;white-space:nowrap;padding:6px 12px;border-radius:999px;background:var(--navy);color:var(--white);font:600 13px/1 'Fredoka','WOW Helvetica',sans-serif;box-shadow:0 3px 0 var(--yellow);opacity:0;pointer-events:none;transition:opacity .25s,translate .25s}
 .snap-dots button:hover::after,.snap-dots button:focus-visible::after{opacity:1;translate:-4px -50%}
+
+/* ================= CAMBIO DE ESCENA =================
+   Las secciones ya no pintan su propio fondo ni degradados: el fondo de toda la página
+   cambia de color (con transición suave) según la escena que está al centro de la pantalla.
+   Colores: azul (azul marino), amarillo y blanco. */
+:root{--escena:var(--navy)}
+html,body{background-color:var(--escena);transition:background-color .9s cubic-bezier(.4,0,.2,1)}
+body[data-escena-color="azul"]{--escena:var(--navy)}
+body[data-escena-color="amarillo"]{--escena:var(--yellow)}
+body[data-escena-color="blanco"]{--escena:var(--white)}
+main>section,main>.zona-luces>section,footer,.hero,.problem,.brand-moment,.services,.portfolio,.team,.blog,.diagnostic{background:transparent!important}
+/* sin el espacio extra que pedían los degradados */
+.services,.portfolio,.team,.brand-moment,.diagnostic,.problem,.blog{padding-bottom:clamp(64px,7vw,110px)}
+/* la cinta y la franja de marca se quedan como elementos propios, sin halo que ensucie el color */
+.ticker{box-shadow:none}
+/* menú sólido para que no se mezcle con el color de fondo */
+.nav{background:rgba(8,13,84,.94)}
+/* Servicios sobre amarillo: el remate del título en bloque azul marino para que se lea */
+.services .section-head h2 span{display:inline-block;margin-top:.12em;background:var(--navy);color:var(--yellow);padding:.04em .16em .1em;border-radius:6px;line-height:1.02}
+.services .service-card{background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,255,255,.66))}
+.services .eyebrow-pill.tono-blue{box-shadow:inset 0 0 0 2px var(--navy),0 4px 0 var(--navy)}
