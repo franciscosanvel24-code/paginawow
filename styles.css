@@ -587,3 +587,8 @@ footer .copy,footer .copyright{grid-column:1/-1;border-top:1px solid rgba(255,25
   .founder-info:before{margin-bottom:10px}
   .bounce-box{min-height:min(560px,70vh)}
 }
+
+/* Nombre de cada escena al pasar el cursor por su punto */
+.snap-dots button{position:relative}
+.snap-dots button::after{content:attr(data-nombre);position:absolute;right:calc(100% + 16px);top:50%;translate:0 -50%;white-space:nowrap;padding:6px 12px;border-radius:999px;background:var(--navy);color:var(--white);font:600 13px/1 'Fredoka','WOW Helvetica',sans-serif;box-shadow:0 3px 0 var(--yellow);opacity:0;pointer-events:none;transition:opacity .25s,translate .25s}
+.snap-dots button:hover::after,.snap-dots button:focus-visible::after{opacity:1;translate:-4px -50%}

@@ -250,7 +250,8 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
   sections.forEach((sec, i) => {
     const b = document.createElement('button');
     b.type = 'button';
-    const label = sec.querySelector('h1, h2')?.textContent.trim().slice(0, 40) || (sec.tagName === 'FOOTER' ? 'Pie de página' : `Apartado ${i + 1}`);
+    const label = sec.dataset.escena || sec.querySelector('h1, h2')?.textContent.trim().slice(0, 40) || `Apartado ${i + 1}`;
+    b.dataset.nombre = label;
     b.setAttribute('aria-label', label);
     b.title = label;
     b.addEventListener('click', () => goTo(stops[i].start));
