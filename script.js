@@ -103,7 +103,7 @@ if (!reduceMotion) {
   layer.className = 'capa-luces';
   layer.setAttribute('aria-hidden', 'true');
   main.prepend(layer);
-  const lights = [...main.querySelectorAll('.blob, .luz')].filter((el) => !el.closest('.capa-luces'));
+  const lights = [...main.querySelectorAll('.blob, .luz')].filter((el) => !el.closest('.capa-luces') && !el.closest('[hidden]'));
   const state = lights.map((el, n) => {
     const origin = el.closest('.zona-luces') || el.closest('section');
     const r = el.getBoundingClientRect(), m = main.getBoundingClientRect();
@@ -222,7 +222,7 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
 (() => {
   const desktop = window.matchMedia('(pointer: fine) and (min-width: 901px)');
   if (reduceMotion) return;
-  const sections = [...document.querySelectorAll('main > section, main > .zona-luces > section, footer')];
+  const sections = [...document.querySelectorAll('main > section, main > .zona-luces > section, footer')].filter((s) => !s.hidden);
   const navH = () => (document.querySelector('.nav')?.offsetHeight || 0);
   const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
   const clamp = (v) => Math.max(0, Math.min(maxScroll(), Math.round(v)));
@@ -329,7 +329,7 @@ document.querySelectorAll('.social-link[data-url]').forEach((link) => {
 
 /* ---------- Cambio de escena: el fondo toma el color de la escena que cruza el centro de la pantalla ---------- */
 (() => {
-  const scenes = [...document.querySelectorAll('[data-color]')];
+  const scenes = [...document.querySelectorAll('[data-color]')].filter((s) => !s.closest('[hidden]'));
   if (!scenes.length) return;
   const set = (color) => { if (document.body.dataset.escenaColor !== color) document.body.dataset.escenaColor = color; };
   set(scenes[0].dataset.color);

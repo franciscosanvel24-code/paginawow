@@ -829,3 +829,6 @@ main,footer{overflow-x:clip}
   .nav.menu-active nav a{border-radius:0;padding:22px clamp(24px,3vw,40px);margin:0}
 }
 section[hidden]{display:none!important}
+/* Co-Founders sin el sello central: las dos tarjetas quedan lado a lado (en celular, una debajo de otra) */
+@media(min-width:601px){.founders{grid-template-columns:repeat(2,minmax(0,min(460px,64vh)))!important;justify-content:center;gap:clamp(32px,5vw,96px)!important}}
+@media(min-width:601px) and (max-width:900px){.founders{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important}}
