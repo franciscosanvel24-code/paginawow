@@ -38,7 +38,7 @@ document.addEventListener('keydown', (e) => {
 
 /* Formulario → Buzón WOW (Google Sheets + aviso por Gmail).
    Pega en BUZON_URL la URL /exec de la aplicación web de Apps Script. Mientras esté vacía, el formulario no envía. */
-const BUZON_URL = '';
+const BUZON_URL = 'https://script.google.com/macros/s/AKfycbwtRqHe5RDdl5hIy2NoFRysdDY9o_rTwyfL1dNzSstXbi8p8VVYnTLu7ycjpQVy2gtNwg/exec';
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
 let sending = false;
