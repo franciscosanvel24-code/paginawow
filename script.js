@@ -26,6 +26,15 @@ menuToggle?.addEventListener('click', () => {
 });
 header?.querySelectorAll('a[href*="#"]').forEach((link) => link.addEventListener('click', closeMenu));
 window.addEventListener('resize', () => { if (window.innerWidth > 1120) closeMenu(); });
+/* El menú se cierra al tocar fuera del panel o con Escape (y el foco regresa al botón que lo abrió) */
+document.addEventListener('click', (e) => {
+  if (!header?.classList.contains('menu-active')) return;
+  if (e.target.closest('#nav-menu') || e.target.closest('.menu-toggle')) return;
+  closeMenu();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && header?.classList.contains('menu-active')) { closeMenu(); menuToggle?.focus(); }
+});
 
 /* Formulario preparado: valida, filtra spam y no simula un envío sin destino */
 const form = document.getElementById('contactForm');
