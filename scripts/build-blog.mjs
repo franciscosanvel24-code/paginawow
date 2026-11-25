@@ -44,6 +44,8 @@ if (posts.length) {
   const indexCards = `<div class="blog-index-grid">${posts.map((post) => card(post, '../')).join('')}</div>`;
   home = replaceBlock(home, '<!-- BLOG_CARDS_START -->', '<!-- BLOG_CARDS_END -->', homeCards);
   blog = replaceBlock(blog, '<!-- BLOG_INDEX_START -->', '<!-- BLOG_INDEX_END -->', indexCards);
+  /* Con artículos publicados: se muestra la sección WOW Ideas y el enlace "Blog" en el menú y el pie de página */
+  home = home.replace('<section hidden class="blog section"', '<section class="blog section"').replaceAll('<!-- NAV_BLOG -->', '<a href="#blog">Blog</a>');
   for (const post of posts) {
     const output = path.join(root, 'blog', post.slug);
     await fs.mkdir(output, { recursive: true });

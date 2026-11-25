@@ -36,23 +36,49 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && header?.classList.contains('menu-active')) { closeMenu(); menuToggle?.focus(); }
 });
 
-/* Formulario preparado: valida, filtra spam y no simula un envío sin destino */
+/* Formulario → Buzón WOW (Google Sheets + aviso por Gmail).
+   Pega en BUZON_URL la URL /exec de la aplicación web de Apps Script. Mientras esté vacía, el formulario no envía. */
+const BUZON_URL = '';
 const form = document.getElementById('contactForm');
 const note = document.getElementById('formNote');
-let validating = false;
-form?.addEventListener('submit', (event) => {
+let sending = false;
+form?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (validating) return;
+  if (sending) return;
   const honeypot = form.elements.website;
   if (honeypot && honeypot.value) return;
+  note.classList.remove('is-ok', 'is-error');
   if (!form.checkValidity()) {
     form.reportValidity();
     note.textContent = 'Revisa los campos indicados para continuar.';
     return;
   }
-  validating = true;
-  note.textContent = 'El formulario está listo. El envío se activará cuando definamos el correo o CRM de destino.';
-  window.setTimeout(() => { validating = false; }, 1800);
+  if (!BUZON_URL) {
+    note.textContent = 'El formulario está listo. El envío se activará cuando conectemos el Buzón WOW.';
+    return;
+  }
+  sending = true;
+  const button = form.querySelector('button[type="submit"]');
+  button?.setAttribute('disabled', '');
+  form.classList.add('is-sending');
+  note.textContent = 'Enviando tu mensaje…';
+  try {
+    const data = new URLSearchParams(new FormData(form));
+    data.set('origen', location.href);
+    const res = await fetch(BUZON_URL, { method: 'POST', body: data });
+    const out = await res.json().catch(() => ({ ok: res.ok }));
+    if (!out.ok) throw new Error(out.error || 'Error');
+    form.reset();
+    note.classList.add('is-ok');
+    note.textContent = '¡Listo! Recibimos tu mensaje. Te contactaremos muy pronto. GO TO WOW.';
+  } catch (error) {
+    note.classList.add('is-error');
+    note.textContent = 'No pudimos enviar tu mensaje. Intenta de nuevo en un momento.';
+  } finally {
+    sending = false;
+    button?.removeAttribute('disabled');
+    form.classList.remove('is-sending');
+  }
 });
 
 /* Motor de rebote: mueve elementos dentro de su contenedor y los hace rebotar en sus paredes.
