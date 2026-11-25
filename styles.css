@@ -801,3 +801,7 @@ main,footer{overflow-x:clip}
   .nav nav{justify-self:center}
 }
 @media(max-width:1120px){.menu-toggle{margin-right:0}}
+/* Contacto sin formulario (Buzón WOW pendiente): el recuadro ocupa el ancho completo, centrado */
+.diagnostic.sin-formulario{grid-template-columns:1fr!important}
+.diagnostic.sin-formulario .bounce-box{width:100%;max-width:1180px;margin-inline:auto}
+.contact-form[hidden]{display:none!important}

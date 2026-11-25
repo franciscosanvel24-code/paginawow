@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" />
-  <link rel="stylesheet" href="styles.css?v=20261120-1" />
+  <link rel="stylesheet" href="styles.css?v=20261125-1" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ProfessionalService","name":"WOW Marketing","url":"https://franciscosanvel24-code.github.io/paginawow/","logo":"https://franciscosanvel24-code.github.io/paginawow/assets/wow-logo-principal.png","description":"Agencia de marca personal para profesionistas expertos.","areaServed":"MX"}
   </script>
@@ -152,7 +152,7 @@
     </section>
 
     <!-- CONTACTO -->
-    <section class="diagnostic section" id="contacto" data-escena="08 · Contacto" data-color="blanco">
+    <section class="diagnostic section sin-formulario" id="contacto" data-escena="08 · Contacto" data-color="blanco">
       <span class="blob blob-c1" aria-hidden="true"></span><span class="blob blob-c2" aria-hidden="true"></span>
       <div class="bounce-box reveal" id="bounceBox">
         <img class="bounce-iso bounce-iso-1" src="assets/wow-isotipo.svg" alt="" aria-hidden="true" />
@@ -167,7 +167,8 @@
           <p class="gtw-big" aria-label="Go to WOW">GO TO <img src="assets/wow-wordmark-amarillo.svg" alt="" /></p>
         </div>
       </div>
-      <form class="contact-form glass glass-dark reveal" id="contactForm" novalidate>
+      <!-- BUZÓN WOW (pendiente): formulario oculto hasta conectar el destino de las respuestas (Google Sheets "Buzón WOW" + aviso por Gmail). Para mostrarlo, quita el atributo hidden y la clase sin-formulario de la sección. -->
+      <form class="contact-form glass glass-dark reveal" id="contactForm" novalidate hidden>
         <label class="hp" aria-hidden="true" hidden>Sitio web<input name="website" tabindex="-1" autocomplete="off" /></label>
         <label>Nombre completo<input name="nombre" autocomplete="name" required placeholder="¿Cómo te llamas?" /></label>
         <label>Profesión o especialidad<input name="profesion" autocomplete="organization-title" required placeholder="¿En qué eres experto?" /></label>
@@ -190,6 +191,6 @@
     <div class="footer-column"><h2>¡Síguenos!</h2><span>Instagram</span><span>Facebook</span><span>TikTok</span><span>LinkedIn</span></div>
     <p class="copy">© 2026 WOW Marketing. Todos los derechos reservados.</p>
   </footer>
-  <script src="script.js?v=20261120-1"></script>
+  <script src="script.js?v=20261125-1"></script>
 </body>
 </html>
