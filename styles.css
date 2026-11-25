@@ -805,11 +805,14 @@ main,footer{overflow-x:clip}
 .diagnostic.sin-formulario{grid-template-columns:1fr!important}
 .diagnostic.sin-formulario .bounce-box{width:100%;max-width:1180px;margin-inline:auto}
 .contact-form[hidden]{display:none!important}
-/* Menú desplegable: al pasar el cursor, todo el recuadro del título se ilumina con los colores WOW en secuencia */
+/* Menú desplegable: al pasar el cursor, todo el recuadro del título se ilumina con los colores WOW en secuencia
+   (azul eléctrico, cian, amarillo, blanco), sin sombra y cubriendo el ancho y alto completos del botón */
 @media(max-width:1120px){
-  .nav.menu-active nav a{display:block;padding:12px 18px;margin-inline:-18px;border-radius:16px;border-bottom:0;transition:background .25s,color .25s,padding .25s,box-shadow .25s}
-  .nav.menu-active nav a:nth-child(3n+1){--menu-c:var(--blue);--menu-t:var(--white)}
-  .nav.menu-active nav a:nth-child(3n+2){--menu-c:var(--cyan);--menu-t:var(--navy)}
-  .nav.menu-active nav a:nth-child(3n+3){--menu-c:var(--yellow);--menu-t:var(--navy)}
-  .nav.menu-active nav a:hover,.nav.menu-active nav a:focus-visible{background:var(--menu-c);color:var(--menu-t);padding-left:26px;box-shadow:0 4px 0 color-mix(in srgb,var(--menu-c) 60%,var(--navy));outline:none}
+  .nav.menu-active nav{gap:6px}
+  .nav.menu-active nav a{display:block;width:100%;box-sizing:border-box;padding:14px 18px;border-radius:16px;border-bottom:0;transition:background .25s,color .25s}
+  .nav.menu-active nav a:nth-child(4n+1){--menu-c:var(--blue);--menu-t:var(--white)}
+  .nav.menu-active nav a:nth-child(4n+2){--menu-c:var(--cyan);--menu-t:var(--navy)}
+  .nav.menu-active nav a:nth-child(4n+3){--menu-c:var(--yellow);--menu-t:var(--navy)}
+  .nav.menu-active nav a:nth-child(4n+4){--menu-c:var(--white);--menu-t:var(--navy)}
+  .nav.menu-active nav a:hover,.nav.menu-active nav a:focus-visible{background:var(--menu-c);color:var(--menu-t);box-shadow:none;outline:none}
 }
